@@ -23,23 +23,54 @@ function LeapterLogo({ className = "" }: { className?: string }) {
 
 // SLIDE 1 - Title
 function Slide1() {
+  const stats = [
+    { label: "PRs Merged", value: "10" },
+    { label: "Days", value: "3" },
+    { label: "Contributors", value: "5" },
+  ];
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}><LeapterLogo className="mb-8" /></motion.div>
-      <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6" style={{ color: BRAND.colors.text }}>Claude Code Best Practices</motion.h1>
-      <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-xl md:text-2xl max-w-3xl" style={{ color: BRAND.colors.textMuted }}>Implementation Summary</motion.p>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-12 flex items-center gap-3 text-sm" style={{ color: BRAND.colors.textMuted }}><Clock className="w-4 h-4" /><span>3-Day Sprint</span></motion.div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}><LeapterLogo className="mb-6" /></motion.div>
+      <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-5xl md:text-6xl font-bold mb-4" style={{ color: BRAND.colors.text }}>Claude Code Best Practices</motion.h1>
+      <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-xl md:text-2xl max-w-3xl mb-2" style={{ color: BRAND.colors.textMuted }}>Complete Implementation Summary</motion.p>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="text-base max-w-2xl" style={{ color: BRAND.colors.textMuted }}>How we made the codebase maximally productive for AI-assisted development</motion.p>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-10 flex items-center gap-6">
+        {stats.map((s, i) => (
+          <div key={s.label} className="text-center">
+            <p className="text-3xl font-bold" style={{ color: BRAND.colors.orange }}>{s.value}</p>
+            <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{s.label}</p>
+          </div>
+        ))}
+      </motion.div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-6 flex items-center gap-3 text-sm" style={{ color: BRAND.colors.textMuted }}><Clock className="w-4 h-4" /><span>Feb 1-3, 2026</span></motion.div>
     </div>
   );
 }
 
 // SLIDE 2 - Goal
 function Slide2() {
+  const problems = [
+    "Claude explores codebase randomly on every task",
+    "Context lost after /clear or /compact",
+    "No shared memory of decisions across developers",
+    "Dangerous commands need manual approval every time",
+  ];
   return (
     <div className="flex flex-col items-center justify-center h-full px-24 pt-28">
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="max-w-4xl text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8" style={{ color: BRAND.colors.text }}>The Goal</h2>
-        <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: BRAND.colors.textMuted }}>Make the codebase <span className="font-bold" style={{ background: BRAND.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>maximally productive</span> for AI-assisted development</p>
+      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="max-w-4xl">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-center" style={{ color: BRAND.colors.text }}>The Problem</h2>
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          {problems.map((p, i) => (
+            <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
+              <X className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="text-sm" style={{ color: BRAND.colors.text }}>{p}</p>
+            </motion.div>
+          ))}
+        </div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-center">
+          <p className="text-xl mb-2" style={{ color: BRAND.colors.textMuted }}>The Goal:</p>
+          <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: BRAND.colors.text }}>Make the codebase <span className="font-bold" style={{ background: BRAND.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>maximally productive</span> for AI-assisted development</p>
+        </motion.div>
       </motion.div>
     </div>
   );
