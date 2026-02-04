@@ -674,7 +674,8 @@ function Slide17() {
   const benefits = [
     { text: "CLAUDE.md = instant context", detail: "No more codebase exploration" },
     { text: "3-tier memory persistence", detail: "decisions.md + sessions/ + context" },
-    { text: "Hooks eliminate approvals", detail: "Safe commands auto-approved" },
+    { text: "MCP self-verification loop", detail: "Supabase/Playwright MCPs verify work automatically" },
+    { text: "Shared allow list", detail: "80+ auto-approved commands across team" },
     { text: "Docs consolidated to /docs/", detail: "One source of truth" },
     { text: "15+ slash commands", detail: "/verify, /commit, /pr, /fix-ci..." },
   ];
@@ -868,8 +869,83 @@ function Slide20() {
   );
 }
 
-// SLIDE 21 - End
+// SLIDE 21 - Claude Code Background Sessions
 function Slide21() {
+  const workflow = [
+    { step: "1", text: "& suffix", desc: "Spawns task as background session" },
+    { step: "2", text: "Cloud execution", desc: "Runs on Claude's infrastructure, not your machine" },
+    { step: "3", text: "GitHub integration", desc: "Select repo + branch, configure env vars" },
+    { step: "4", text: "Notification", desc: "Get notified when task completes" },
+    { step: "5", text: "Teleport back", desc: "Pull session back to local Claude Code CLI" },
+  ];
+  const benefits = [
+    "Spin up 3-5 parallel tasks (different features, different clients)",
+    "Your machine stays free for other work",
+    "Review results when ready, pull back locally if needed",
+    "Visual UI + GitHub integration + persistent web sessions",
+  ];
+  const examples = [
+    { task: "Add dark mode to app &", status: "background" },
+    { task: "Write LinkedIn post about AI &", status: "background" },
+    { task: "Local work on client project", status: "active" },
+  ];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Layers className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Background Sessions</h2><p style={{ color: BRAND.colors.textMuted }}>Parallelization with Claude Code &amp; suffix</p></div>
+      </motion.div>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        <div className="flex flex-col gap-4">
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+            <h3 className="text-lg font-bold mb-3" style={{ color: BRAND.colors.text }}>The Workflow</h3>
+            <div className="space-y-2">
+              {workflow.map((w, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0" style={{ background: BRAND.gradient }}>{w.step}</span>
+                  <div><p className="font-medium text-sm" style={{ color: BRAND.colors.text }}>{w.text}</p><p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{w.desc}</p></div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-2xl border-2" style={{ borderColor: BRAND.colors.purple, background: "rgb(250 245 255)" }}>
+            <h3 className="text-sm font-bold mb-2" style={{ color: BRAND.colors.purple }}>Monday Morning Example</h3>
+            <div className="space-y-2">
+              {examples.map((e, i) => (
+                <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-white">
+                  <code className="text-xs font-mono" style={{ color: BRAND.colors.text }}>{e.task}</code>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${e.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}`}>{e.status}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs mt-2 italic" style={{ color: BRAND.colors.textMuted }}>Check in later, review results, teleport back what needs polish.</p>
+          </motion.div>
+        </div>
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200 flex flex-col">
+          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Why This Is Huge</h3>
+          <ul className="space-y-3 flex-1">
+            {benefits.map((b, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <Zap className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND.colors.orange }} />
+                <span className="text-sm" style={{ color: BRAND.colors.text }}>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 p-3 rounded-xl" style={{ background: BRAND.gradient }}>
+            <p className="text-sm text-white font-medium">🚀 Parallelization without context switching</p>
+            <p className="text-xs text-white/80">Like subagents, but with visual UI + GitHub + persistence</p>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.orange, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Key insight:</strong> This fits the &ldquo;multiple things in parallel&rdquo; workflow. Spin up background tasks, your machine stays free, review and merge when ready.</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 22 - End
+function Slide22() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -881,7 +957,7 @@ function Slide21() {
   );
 }
 
-const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />, <Slide21 key="21" />];
+const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />, <Slide21 key="21" />, <Slide22 key="22" />];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
