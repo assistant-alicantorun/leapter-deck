@@ -872,7 +872,7 @@ function Slide20() {
 // SLIDE 21 - Claude Code Background Sessions
 function Slide21() {
   const workflow = [
-    { step: "1", text: "& suffix", desc: "Spawns task as background session" },
+    { step: "1", text: "& prefix", desc: "Type & before your prompt to spawn background session" },
     { step: "2", text: "Cloud execution", desc: "Runs on Claude's infrastructure, not your machine" },
     { step: "3", text: "GitHub integration", desc: "Select repo + branch, configure env vars" },
     { step: "4", text: "Notification", desc: "Get notified when task completes" },
@@ -882,11 +882,14 @@ function Slide21() {
     "Spin up 3-5 parallel tasks (different features, different clients)",
     "Your machine stays free for other work",
     "Review results when ready, pull back locally if needed",
-    "Visual UI + GitHub integration + persistent web sessions",
+  ];
+  const limitations = [
+    "⚠️ MCPs not available in web sessions",
+    "💡 Alternative: multiple git checkouts for local parallelization",
   ];
   const examples = [
-    { task: "Add dark mode to app &", status: "background" },
-    { task: "Write LinkedIn post about AI &", status: "background" },
+    { task: "& Add dark mode to the app", status: "background" },
+    { task: "& Write LinkedIn post about AI", status: "background" },
     { task: "Local work on client project", status: "active" },
   ];
   return (
@@ -922,8 +925,8 @@ function Slide21() {
           </motion.div>
         </div>
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200 flex flex-col">
-          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Why This Is Huge</h3>
-          <ul className="space-y-3 flex-1">
+          <h3 className="text-lg font-bold mb-3" style={{ color: BRAND.colors.text }}>Why This Is Huge</h3>
+          <ul className="space-y-2 mb-3">
             {benefits.map((b, i) => (
               <li key={i} className="flex items-start gap-3">
                 <Zap className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND.colors.orange }} />
@@ -931,9 +934,15 @@ function Slide21() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 p-3 rounded-xl" style={{ background: BRAND.gradient }}>
+          <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 mb-3">
+            <p className="text-sm font-bold mb-1" style={{ color: "#B45309" }}>Limitations</p>
+            {limitations.map((l, i) => (
+              <p key={i} className="text-xs" style={{ color: BRAND.colors.text }}>{l}</p>
+            ))}
+          </div>
+          <div className="mt-auto p-3 rounded-xl" style={{ background: BRAND.gradient }}>
             <p className="text-sm text-white font-medium">🚀 Parallelization without context switching</p>
-            <p className="text-xs text-white/80">Like subagents, but with visual UI + GitHub + persistence</p>
+            <p className="text-xs text-white/80">GitHub integration + persistent web sessions</p>
           </div>
         </motion.div>
       </div>
@@ -944,8 +953,76 @@ function Slide21() {
   );
 }
 
-// SLIDE 22 - End
+// SLIDE 22 - Browser Automation Comparison
 function Slide22() {
+  const playwrightMcp = [
+    { feature: "Speed", value: "⚡ Fast verification loop" },
+    { feature: "Context", value: "Uses MCP context" },
+    { feature: "Best for", value: "Quick UI validation during dev" },
+    { feature: "E2E Tests", value: "/create-e2e-test command" },
+  ];
+  const agentBrowser = [
+    { feature: "Speed", value: "Slower (separate process)" },
+    { feature: "Context", value: "Independent of Claude context" },
+    { feature: "Best for", value: "When context window is full" },
+    { feature: "Use case", value: "Heavy browsing, research" },
+  ];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Activity className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Browser Automation</h2><p style={{ color: BRAND.colors.textMuted }}>Playwright MCP vs Vercel Agent Browser CLI</p></div>
+      </motion.div>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl border-2" style={{ borderColor: BRAND.colors.orange, background: "rgb(255 250 245)" }}>
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: BRAND.colors.orange }}>🎭 Playwright MCP</h3>
+          <ul className="space-y-3">
+            {playwrightMcp.map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="text-sm font-bold w-20 flex-shrink-0" style={{ color: BRAND.colors.textMuted }}>{item.feature}</span>
+                <span className="text-sm" style={{ color: BRAND.colors.text }}>{item.value}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 p-3 rounded-xl bg-white border border-orange-200">
+            <p className="text-xs font-bold" style={{ color: BRAND.colors.orange }}>✅ Use when:</p>
+            <p className="text-sm" style={{ color: BRAND.colors.text }}>Fast verification loop needed during development</p>
+          </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl border-2" style={{ borderColor: BRAND.colors.purple, background: "rgb(250 245 255)" }}>
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: BRAND.colors.purple }}>🌐 Vercel Agent Browser CLI</h3>
+          <ul className="space-y-3">
+            {agentBrowser.map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="text-sm font-bold w-20 flex-shrink-0" style={{ color: BRAND.colors.textMuted }}>{item.feature}</span>
+                <span className="text-sm" style={{ color: BRAND.colors.text }}>{item.value}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 p-3 rounded-xl bg-white border border-purple-200">
+            <p className="text-xs font-bold" style={{ color: BRAND.colors.purple }}>✅ Use when:</p>
+            <p className="text-sm" style={{ color: BRAND.colors.text }}>Context window is getting too full</p>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-4 p-4 rounded-2xl" style={{ background: BRAND.gradient }}>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-white font-bold">💡 E2E Test Generation</p>
+            <p className="text-white/80 text-sm">Use <code className="bg-white/20 px-2 py-0.5 rounded">/create-e2e-test</code> to generate Playwright E2E tests from UI interactions</p>
+          </div>
+          <div className="text-right">
+            <p className="text-white/60 text-xs">Combines both approaches:</p>
+            <p className="text-white text-sm">MCP for dev → CLI for CI</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 23 - End
+function Slide23() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -957,7 +1034,7 @@ function Slide22() {
   );
 }
 
-const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />, <Slide21 key="21" />, <Slide22 key="22" />];
+const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />, <Slide21 key="21" />, <Slide22 key="22" />, <Slide23 key="23" />];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
