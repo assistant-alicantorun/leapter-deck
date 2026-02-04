@@ -563,34 +563,53 @@ function Slide14() {
 // SLIDE 15 - Agent System
 function Slide15() {
   const agents = [
-    { name: "postgres-expert", model: "Sonnet", triggers: "database, schema, migration, RLS", when: "After DB changes" },
-    { name: "react-form-builder", model: "Sonnet", triggers: "form, validation, react-hook-form", when: "Creating forms" },
-    { name: "playwright-e2e-expert", model: "Sonnet", triggers: "e2e test, playwright, flaky", when: "After UI features" },
-    { name: "code-quality-reviewer", model: "Sonnet", triggers: "review, quality, security", when: "Before PR" },
-    { name: "frontend-tester", model: "Opus", triggers: "validate UI, test in browser", when: "After UI changes" },
-    { name: "code-simplifier", model: "Haiku", triggers: "simplify, clean up, refactor", when: "Before PR" },
+    { name: "postgres-expert", model: "Sonnet", when: "After DB changes" },
+    { name: "react-form-builder", model: "Sonnet", when: "Creating forms" },
+    { name: "playwright-e2e-expert", model: "Sonnet", when: "After UI features" },
+    { name: "code-quality-reviewer", model: "Sonnet", when: "Before PR" },
+    { name: "frontend-tester", model: "Opus", when: "After UI changes" },
+    { name: "code-simplifier", model: "Haiku", when: "Before PR" },
+    { name: "react-ui-core-tester", model: "Sonnet", when: "After components" },
+  ];
+  const autoInvoke = [
+    "After DB changes → postgres-expert",
+    "After forms → react-form-builder",
+    "After UI → frontend-tester",
+    "Before PR → code-quality-reviewer + code-simplifier",
+    "After features → playwright-e2e-expert",
   ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-3">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Users className="w-10 h-10 text-white" /></div>
-        <div>
-          <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Agent System</h2>
-          <p style={{ color: BRAND.colors.textMuted }}>7 specialized agents in .claude/agents/</p>
-        </div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Agent System</h2><p style={{ color: BRAND.colors.textMuted }}>7 specialized agents in .claude/agents/</p></div>
       </motion.div>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Subagents spawn with own context, work in parallel, specialized focus&rdquo;</motion.p>
-      <div className="flex-1 grid grid-cols-2 gap-3">
-        {agents.map((a, i) => (
-          <motion.div key={a.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
-            <div className="flex items-center justify-between mb-2">
-              <code className="text-sm font-bold" style={{ color: BRAND.colors.orange }}>{a.name}</code>
-              <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: a.model === "Opus" ? BRAND.colors.purple : a.model === "Haiku" ? "#10B981" : BRAND.colors.orange, color: "white" }}>{a.model}</span>
-            </div>
-            <p className="text-xs mb-1" style={{ color: BRAND.colors.textMuted }}>Triggers: <span className="font-mono">{a.triggers}</span></p>
-            <p className="text-xs font-medium" style={{ color: BRAND.colors.text }}>↳ {a.when}</p>
-          </motion.div>
-        ))}
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2">
+          {agents.map((a, i) => (
+            <motion.div key={a.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.03 }} className="p-3 rounded-xl bg-gray-50 border border-gray-200">
+              <div className="flex items-center justify-between mb-1">
+                <code className="text-xs font-bold" style={{ color: BRAND.colors.orange }}>{a.name}</code>
+                <span className="text-xs px-1.5 py-0.5 rounded-full" style={{ background: a.model === "Opus" ? BRAND.colors.purple : a.model === "Haiku" ? "#10B981" : BRAND.colors.orange, color: "white", fontSize: "10px" }}>{a.model}</span>
+              </div>
+              <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{a.when}</p>
+            </motion.div>
+          ))}
+        </div>
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }} className="p-4 rounded-2xl border-2" style={{ borderColor: BRAND.colors.purple, background: "rgb(250 245 255)" }}>
+          <h3 className="text-lg font-bold mb-3" style={{ color: BRAND.colors.purple }}>Auto-Invocation Patterns</h3>
+          <ul className="space-y-2">
+            {autoInvoke.map((pattern, i) => (
+              <li key={i} className="text-sm flex items-start gap-2">
+                <span style={{ color: BRAND.colors.purple }}>→</span>
+                <span style={{ color: BRAND.colors.text }}>{pattern}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 p-2 rounded-lg bg-white">
+            <p className="text-xs" style={{ color: BRAND.colors.textMuted }}><strong>Smart:</strong> Agents triggered automatically based on context</p>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
