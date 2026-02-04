@@ -24,7 +24,7 @@ function LeapterLogo({ className = "" }: { className?: string }) {
 // SLIDE 1 - Title
 function Slide1() {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center px-16">
+    <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-16">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}><LeapterLogo className="mb-8" /></motion.div>
       <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6" style={{ color: BRAND.colors.text }}>Claude Code Best Practices</motion.h1>
       <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-xl md:text-2xl max-w-3xl" style={{ color: BRAND.colors.textMuted }}>Implementation Summary</motion.p>
@@ -36,7 +36,7 @@ function Slide1() {
 // SLIDE 2 - Goal
 function Slide2() {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-16">
+    <div className="flex flex-col items-center justify-center h-full px-24 pt-16">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="max-w-4xl text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-8" style={{ color: BRAND.colors.text }}>The Goal</h2>
         <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: BRAND.colors.textMuted }}>Make the codebase <span className="font-bold" style={{ background: BRAND.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>maximally productive</span> for AI-assisted development</p>
@@ -49,7 +49,7 @@ function Slide2() {
 function Slide3() {
   const folders = [{ name: "CLAUDE.md", desc: "Main entry point", icon: Brain, highlight: true }, { name: "docs/", desc: "All documentation", icon: FolderTree }, { name: ".claude/", desc: "Settings, memory, skills", icon: Layers }, { name: "apps/", desc: "Application code", icon: Terminal }];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl md:text-5xl font-bold mb-12" style={{ color: BRAND.colors.text }}>Architecture</motion.h2>
       <div className="flex-1 grid grid-cols-2 gap-6 max-w-4xl mx-auto">
         {folders.map((item, i) => { const Icon = item.icon; return (
@@ -66,7 +66,7 @@ function Slide3() {
 // SLIDE 4 - CLAUDE.md Brain
 function Slide4() {
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Brain className="w-10 h-10 text-white" /></div>
         <div><h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.colors.text }}>CLAUDE.md</h2><p style={{ color: BRAND.colors.textMuted }}>The Brain</p></div>
@@ -89,7 +89,7 @@ function Slide5() {
     { label: "Onboarding time", before: "Hours exploring", after: "Minutes reading", improvement: "10x faster" },
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>The Impact</motion.h2>
       <div className="flex-1 flex flex-col gap-6">
         <div className="grid grid-cols-2 gap-8 mb-4">
@@ -133,7 +133,7 @@ function Slide5() {
 function Slide6() {
   const tiers = [{ tier: "Tier 1", name: "Shared", items: "decisions.md • context.md • conventions.md", note: "Git ✓", color: BRAND.colors.orange }, { tier: "Tier 2", name: "Sessions", items: "sessions/2026-02-04.md • Personal progress", note: "Git ✗", color: BRAND.colors.purple }, { tier: "Tier 3", name: "Ephemeral", items: "Current conversation • Active task", note: "Context", color: "#4F46E5" }];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Database className="w-10 h-10 text-white" /></div>
         <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Three-Tier Memory</h2>
@@ -154,7 +154,7 @@ function Slide6() {
 function Slide7() {
   const commands = [{ cmd: "/checkpoint", desc: "Save progress", when: "After features" }, { cmd: "/decision", desc: "Log ADR", when: "After arch choice" }, { cmd: "/handoff", desc: "Generate handoff", when: "Passing to teammate" }];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>Session Commands</motion.h2>
       <div className="flex-1 flex flex-col gap-4">
         {commands.map((item, i) => (
@@ -172,7 +172,7 @@ function Slide7() {
 // SLIDE 8 - Docs Before/After
 function Slide8() {
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><FileText className="w-10 h-10 text-white" /></div>
         <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Docs Consolidation</h2>
@@ -219,7 +219,7 @@ function Slide9() {
     }
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Zap className="w-10 h-10 text-white" /></div>
         <div>
@@ -259,7 +259,7 @@ function Slide10() {
   const safe = ["Read, Glob, Grep, LS", "pnpm test, pnpm build", "git status, git diff"];
   const blocked = ["rm -rf /", "DROP DATABASE", ".env + cat", "git push --force"];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>Pre-Tool Hook</motion.h2>
       <div className="flex-1 grid grid-cols-2 gap-8">
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-6 rounded-2xl bg-green-50 border border-green-200">
@@ -285,7 +285,7 @@ function Slide11() {
     "/api/hub/v1/internal/*"
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Activity className="w-10 h-10 text-white" /></div>
         <div>
@@ -335,7 +335,7 @@ function Slide12() {
     { cmd: "/simplify", desc: "Clean up code", runs: "Remove dead code, extract functions", saves: "Cleaner PRs" }
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Command className="w-10 h-10 text-white" /></div>
         <div>
@@ -370,7 +370,7 @@ function Slide13() {
     { name: "code-simplifier", model: "Haiku", triggers: "simplify, clean up, refactor", when: "Before PR" },
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Users className="w-10 h-10 text-white" /></div>
         <div>
@@ -404,7 +404,7 @@ function Slide14() {
     { name: "Hooks", desc: "Lifecycle automation", count: "3 hooks", examples: "session-start, session-end, pre-tool-use", location: ".claude/hooks/" }
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-6" style={{ color: BRAND.colors.text }}>Key Components</motion.h2>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-lg mb-6" style={{ color: BRAND.colors.textMuted }}>All configurations live in <code className="font-mono bg-gray-100 px-2 py-0.5 rounded">.claude/</code> directory</motion.p>
       <div className="flex-1 grid grid-cols-2 gap-5">
@@ -442,7 +442,7 @@ function Slide15() {
     { text: "15+ slash commands", detail: "/verify, /commit, /pr, /fix-ci..." },
   ];
   return (
-    <div className="flex flex-col h-full px-16 py-12">
+    <div className="flex flex-col h-full px-24 pt-20 pb-16">
       <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-6" style={{ color: BRAND.colors.text }}>What We Built</motion.h2>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="grid grid-cols-6 gap-3 mb-6">
         {stats.map((s, i) => (
@@ -472,7 +472,7 @@ function Slide15() {
 // SLIDE 16 - End
 function Slide16() {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center px-16" style={{ background: BRAND.gradient }}>
+    <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-16" style={{ background: BRAND.gradient }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">Ready for AI-First Development</h1>
         <p className="text-xl md:text-2xl text-white/80">Questions?</p>
@@ -496,11 +496,11 @@ export default function Presentation() {
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div key={currentSlide} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }} className="absolute inset-0">{slides[currentSlide]}</motion.div>
       </AnimatePresence>
-      <button onClick={prevSlide} disabled={currentSlide === 0} className="absolute left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30"><ChevronLeft className="w-6 h-6" style={{ color: BRAND.colors.text }} /></button>
-      <button onClick={nextSlide} disabled={currentSlide === slides.length - 1} className="absolute right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30"><ChevronRight className="w-6 h-6" style={{ color: BRAND.colors.text }} /></button>
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5">{slides.map((_, i) => (<button key={i} onClick={() => goToSlide(i)} className="w-2 h-2 rounded-full transition-all" style={{ background: i === currentSlide ? BRAND.gradient : BRAND.colors.textMuted + "40", transform: i === currentSlide ? "scale(1.3)" : "scale(1)" }} />))}</div>
-      <div className="absolute bottom-6 right-6 text-sm font-mono" style={{ color: BRAND.colors.textMuted }}>{currentSlide + 1} / {slides.length}</div>
-      <div className="absolute top-6 left-6"><LeapterLogo className="h-8 w-auto" /></div>
+      <button onClick={prevSlide} disabled={currentSlide === 0} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30 z-10"><ChevronLeft className="w-6 h-6" style={{ color: BRAND.colors.text }} /></button>
+      <button onClick={nextSlide} disabled={currentSlide === slides.length - 1} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30 z-10"><ChevronRight className="w-6 h-6" style={{ color: BRAND.colors.text }} /></button>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">{slides.map((_, i) => (<button key={i} onClick={() => goToSlide(i)} className="w-2.5 h-2.5 rounded-full transition-all" style={{ background: i === currentSlide ? BRAND.gradient : BRAND.colors.textMuted + "40", transform: i === currentSlide ? "scale(1.3)" : "scale(1)" }} />))}</div>
+      <div className="absolute bottom-8 right-8 text-sm font-mono" style={{ color: BRAND.colors.textMuted }}>{currentSlide + 1} / {slides.length}</div>
+      <div className="absolute top-8 left-8"><LeapterLogo className="h-8 w-auto" /></div>
     </div>
   );
 }
