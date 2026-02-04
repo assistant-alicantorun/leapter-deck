@@ -582,19 +582,157 @@ function Slide15() {
   );
 }
 
-// SLIDE 16 - End
+// SLIDE 16 - Three Phase Roadmap
 function Slide16() {
+  const phases = [
+    { phase: "Phase 1", name: "Developer Experience", status: "✅ Complete", desc: "Claude Code best practices, CLAUDE.md, memory system, hooks, commands", color: "#10B981" },
+    { phase: "Phase 2", name: "Autonomous Agent", status: "🚧 In Progress", desc: "OpenClaw on GCP, full sudo access, Supabase Docker, screenshot validation", color: BRAND.colors.orange },
+    { phase: "Phase 3", name: "Multi-Agent Swarm", status: "🔮 Vision", desc: "Botnet of agents, command center orchestration, parallel development", color: BRAND.colors.purple },
+  ];
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">Ready for AI-First Development</h1>
-        <p className="text-xl md:text-2xl text-white/80">Questions?</p>
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Layers className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>The 3-Phase Roadmap</h2><p style={{ color: BRAND.colors.textMuted }}>From developer tools to autonomous agents</p></div>
+      </motion.div>
+      <div className="flex-1 flex flex-col gap-4">
+        {phases.map((p, i) => (
+          <motion.div key={p.phase} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.15 }} className="p-5 rounded-2xl border-l-4 bg-gray-50 flex-1" style={{ borderColor: p.color }}>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold px-3 py-1 rounded-full text-white" style={{ background: p.color }}>{p.phase}</span>
+                <h3 className="text-xl font-bold" style={{ color: BRAND.colors.text }}>{p.name}</h3>
+              </div>
+              <span className="text-sm font-medium">{p.status}</span>
+            </div>
+            <p className="text-sm" style={{ color: BRAND.colors.textMuted }}>{p.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Key question:</strong> When do we connect Phase 1 (human-assisted) to Phase 2 (autonomous) and begin transitioning to agentic development?</p>
       </motion.div>
     </div>
   );
 }
 
-const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />];
+// SLIDE 17 - Phase 2 Detail
+function Slide17() {
+  const setup = [
+    { item: "Google Cloud VM", desc: "Dedicated instance for OpenClaw bot" },
+    { item: "OpenClaw Agent", desc: "Full sudo/admin mode, complete autonomy" },
+    { item: "Next.js Repository", desc: "Similar codebase, no production access" },
+    { item: "Supabase Docker", desc: "Self-hosted DB that OpenClaw controls entirely" },
+  ];
+  const capabilities = [
+    "Implement features end-to-end",
+    "Take screenshots to validate UI",
+    "Run tests and fix failures",
+    "Deploy to staging environments",
+    "Self-correct based on errors",
+  ];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.colors.orange }}><Terminal className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Phase 2: Autonomous Agent</h2><p style={{ color: BRAND.colors.textMuted }}>OpenClaw with full system control</p></div>
+      </motion.div>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Infrastructure Setup</h3>
+          <ul className="space-y-3">
+            {setup.map((s, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND.colors.orange }} />
+                <div><p className="font-medium text-sm" style={{ color: BRAND.colors.text }}>{s.item}</p><p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{s.desc}</p></div>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Agent Capabilities</h3>
+          <ul className="space-y-2">
+            {capabilities.map((c, i) => (
+              <li key={i} className="flex items-center gap-3">
+                <Zap className="w-4 h-4" style={{ color: BRAND.colors.purple }} />
+                <span className="text-sm" style={{ color: BRAND.colors.text }}>{c}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 p-3 rounded-lg" style={{ background: BRAND.gradient }}>
+            <p className="text-sm text-white font-medium">🔒 Sandboxed: No production access</p>
+            <p className="text-xs text-white/80">Safe to experiment with full autonomy</p>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.orange, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Current status:</strong> Deployed and running. Testing autonomous feature development with screenshot validation loop.</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 18 - Phase 3 Vision
+function Slide18() {
+  const agents = [
+    { name: "Frontend Agent", focus: "UI/UX, React components, styling" },
+    { name: "Backend Agent", focus: "APIs, database, business logic" },
+    { name: "QA Agent", focus: "Testing, validation, edge cases" },
+    { name: "DevOps Agent", focus: "Deployment, infra, monitoring" },
+  ];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.colors.purple }}><Users className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Phase 3: Multi-Agent Swarm</h2><p style={{ color: BRAND.colors.textMuted }}>Command center orchestrating specialized agents</p></div>
+      </motion.div>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;A botnet of AI agents, each specialized, working in parallel on different parts of the system&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Specialized Agents</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {agents.map((a, i) => (
+              <div key={i} className="p-3 rounded-xl border border-gray-200 bg-white">
+                <p className="font-bold text-sm" style={{ color: BRAND.colors.orange }}>{a.name}</p>
+                <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{a.focus}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl border-2 border-dashed" style={{ borderColor: BRAND.colors.purple }}>
+          <h3 className="text-lg font-bold mb-3" style={{ color: BRAND.colors.purple }}>Command Center</h3>
+          <ul className="space-y-2 text-sm" style={{ color: BRAND.colors.textMuted }}>
+            <li>• <strong>Orchestration:</strong> Assign tasks to appropriate agents</li>
+            <li>• <strong>Coordination:</strong> Manage dependencies between agents</li>
+            <li>• <strong>Monitoring:</strong> Track progress, detect conflicts</li>
+            <li>• <strong>Escalation:</strong> Human review for critical decisions</li>
+          </ul>
+          <div className="mt-4 p-3 rounded-lg bg-purple-50">
+            <p className="text-xs" style={{ color: BRAND.colors.purple }}><strong>Vision:</strong> Describe a feature → agents implement it end-to-end</p>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl" style={{ background: BRAND.gradient }}>
+        <p className="text-sm text-white"><strong>The future:</strong> Humans define what to build. Agents figure out how. Review and ship.</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 19 - End
+function Slide19() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">From Tools to Teammates</h1>
+        <p className="text-xl md:text-2xl text-white/80 mb-8">Phase 1 ✅ → Phase 2 🚧 → Phase 3 🔮</p>
+        <p className="text-lg text-white/60">Questions?</p>
+      </motion.div>
+    </div>
+  );
+}
+
+const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
