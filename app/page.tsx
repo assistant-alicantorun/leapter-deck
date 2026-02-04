@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Brain, FolderTree, Zap, Database, Terminal, Layers, CheckCircle, Clock } from "lucide-react";
 
 // ============================================================================
 // LEAPTER BRAND CONSTANTS
@@ -21,27 +21,14 @@ const BRAND = {
 };
 
 // ============================================================================
-// LEAPTER LOGO COMPONENT (Exact SVG from website)
+// LEAPTER LOGO COMPONENT
 // ============================================================================
 
 function LeapterLogo({ className = "" }: { className?: string }) {
   return (
-    <svg
-      preserveAspectRatio="xMidYMid meet"
-      viewBox="0 0 200 58"
-      height="58"
-      width="200"
-      className={className}
-    >
+    <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 200 58" height="58" width="200" className={className}>
       <defs>
-        <linearGradient
-          id="logo-gradient"
-          gradientUnits="userSpaceOnUse"
-          x1="39.882"
-          y1="57.301"
-          x2="9.97"
-          y2="8.481"
-        >
+        <linearGradient id="logo-gradient" gradientUnits="userSpaceOnUse" x1="39.882" y1="57.301" x2="9.97" y2="8.481">
           <stop stopColor="#FA4B00" />
           <stop stopColor="#B379FF" offset="1" />
         </linearGradient>
@@ -63,28 +50,24 @@ function LeapterLogo({ className = "" }: { className?: string }) {
 }
 
 // ============================================================================
-// SLIDE TEMPLATES
+// SLIDE COMPONENTS
 // ============================================================================
 
-// Title Slide Template
-function TitleSlide({ title, subtitle }: { title?: string; subtitle?: string }) {
+// Title Slide
+function Slide1() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        <LeapterLogo className="mb-12" />
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <LeapterLogo className="mb-8" />
       </motion.div>
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6"
+        className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
         style={{ color: BRAND.colors.text }}
       >
-        {title || "Slide Title"}
+        Claude Code Best Practices
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 30 }}
@@ -93,143 +76,357 @@ function TitleSlide({ title, subtitle }: { title?: string; subtitle?: string }) 
         className="text-xl md:text-2xl max-w-3xl"
         style={{ color: BRAND.colors.textMuted }}
       >
-        {subtitle || "Slide subtitle or description goes here"}
+        Implementation Summary
       </motion.p>
-    </div>
-  );
-}
-
-// Content Slide Template (Title + Content Area)
-function ContentSlide({
-  title,
-  children,
-}: {
-  title?: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col h-full px-16 py-12">
-      <motion.h2
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-4xl md:text-5xl font-bold mb-12"
-        style={{ color: BRAND.colors.text }}
-      >
-        {title || "Slide Title"}
-      </motion.h2>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="flex-1 flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-12 flex items-center gap-3 text-sm"
+        style={{ color: BRAND.colors.textMuted }}
       >
-        {children || (
-          <div
-            className="w-full h-full rounded-2xl border-2 border-dashed flex items-center justify-center"
-            style={{ borderColor: BRAND.colors.textMuted + "40" }}
-          >
-            <p style={{ color: BRAND.colors.textMuted }}>Content area</p>
-          </div>
-        )}
+        <Clock className="w-4 h-4" />
+        <span>3-Day Implementation Sprint</span>
       </motion.div>
     </div>
   );
 }
 
-// Two Column Slide Template
-function TwoColumnSlide({
-  title,
-  leftContent,
-  rightContent,
-}: {
-  title?: string;
-  leftContent?: React.ReactNode;
-  rightContent?: React.ReactNode;
-}) {
+// The Goal
+function Slide2() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full px-16">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2 }}
+        className="max-w-4xl text-center"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold mb-8" style={{ color: BRAND.colors.text }}>
+          The Goal
+        </h2>
+        <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: BRAND.colors.textMuted }}>
+          Make the codebase{" "}
+          <span className="font-bold" style={{ background: BRAND.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            maximally productive
+          </span>{" "}
+          for AI-assisted development
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+// Architecture Overview
+function Slide3() {
+  const folders = [
+    { name: "CLAUDE.md", desc: "Main entry point", icon: Brain, highlight: true },
+    { name: "docs/", desc: "All documentation", icon: FolderTree },
+    { name: ".claude/", desc: "Settings, memory, skills", icon: Layers },
+    { name: "apps/", desc: "Application code", icon: Terminal },
+  ];
+
   return (
     <div className="flex flex-col h-full px-16 py-12">
       <motion.h2
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
         className="text-4xl md:text-5xl font-bold mb-12"
         style={{ color: BRAND.colors.text }}
       >
-        {title || "Slide Title"}
+        Architecture at a Glance
       </motion.h2>
-      <div className="flex-1 grid grid-cols-2 gap-8">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex items-center justify-center"
-        >
-          {leftContent || (
-            <div
-              className="w-full h-full rounded-2xl border-2 border-dashed flex items-center justify-center"
-              style={{ borderColor: BRAND.colors.textMuted + "40" }}
+      <div className="flex-1 grid grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {folders.map((item, i) => {
+          const Icon = item.icon;
+          return (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.1 }}
+              className={`p-6 rounded-2xl border-2 flex items-start gap-4 ${item.highlight ? "border-transparent" : "border-gray-200"}`}
+              style={item.highlight ? { background: BRAND.gradient } : {}}
             >
-              <p style={{ color: BRAND.colors.textMuted }}>Left column</p>
-            </div>
-          )}
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex items-center justify-center"
-        >
-          {rightContent || (
-            <div
-              className="w-full h-full rounded-2xl border-2 border-dashed flex items-center justify-center"
-              style={{ borderColor: BRAND.colors.textMuted + "40" }}
-            >
-              <p style={{ color: BRAND.colors.textMuted }}>Right column</p>
-            </div>
-          )}
-        </motion.div>
+              <div className={`p-3 rounded-xl ${item.highlight ? "bg-white/20" : "bg-gray-100"}`}>
+                <Icon className={`w-6 h-6 ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.orange } : {}} />
+              </div>
+              <div>
+                <h3 className={`text-xl font-bold font-mono ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.text } : {}}>
+                  {item.name}
+                </h3>
+                <p className={`text-sm ${item.highlight ? "text-white/80" : ""}`} style={!item.highlight ? { color: BRAND.colors.textMuted } : {}}>
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-// Bullet Points Slide Template
-function BulletSlide({
-  title,
-  bullets,
-}: {
-  title?: string;
-  bullets?: string[];
-}) {
-  const defaultBullets = ["Point one", "Point two", "Point three", "Point four"];
-  const items = bullets || defaultBullets;
+// CLAUDE.md - The Brain
+function Slide4() {
+  return (
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}>
+          <Brain className="w-10 h-10 text-white" />
+        </div>
+        <div>
+          <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.colors.text }}>CLAUDE.md</h2>
+          <p style={{ color: BRAND.colors.textMuted }}>The Brain</p>
+        </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="flex-1 flex items-center"
+      >
+        <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 max-w-3xl">
+          <p className="text-xl italic mb-6" style={{ color: BRAND.colors.textMuted }}>
+            &ldquo;Write it like you&apos;re onboarding a new developer who will start coding in 5 minutes.&rdquo;
+          </p>
+          <p className="text-lg" style={{ color: BRAND.colors.text }}>
+            Not documentation. <strong>Instructions.</strong>
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// What CLAUDE.md Contains
+function Slide5() {
+  const sections = [
+    "Developer Workflow",
+    "Task Assessment Matrix",
+    "MCP Verification",
+    "Agent Usage Guide",
+    "Tech Stack Versions",
+    "Commands Reference",
+  ];
 
   return (
     <div className="flex flex-col h-full px-16 py-12">
       <motion.h2
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-4xl md:text-5xl font-bold mb-12"
+        className="text-4xl font-bold mb-8"
         style={{ color: BRAND.colors.text }}
       >
-        {title || "Slide Title"}
+        What&apos;s Inside CLAUDE.md
+      </motion.h2>
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        {sections.map((item, i) => (
+          <motion.div
+            key={item}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + i * 0.08 }}
+            className="flex items-center gap-4 p-4 rounded-xl bg-gray-50"
+          >
+            <CheckCircle className="w-6 h-6 flex-shrink-0" style={{ color: BRAND.colors.orange }} />
+            <span className="text-lg font-medium" style={{ color: BRAND.colors.text }}>{item}</span>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// The Impact
+function Slide6() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full px-16">
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-4xl font-bold mb-12"
+        style={{ color: BRAND.colors.text }}
+      >
+        The Impact
+      </motion.h2>
+      <div className="grid grid-cols-2 gap-12">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-center"
+        >
+          <p className="text-lg mb-2" style={{ color: BRAND.colors.textMuted }}>Before</p>
+          <p className="text-xl" style={{ color: BRAND.colors.text }}>Claude explores codebase to understand it</p>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-center"
+        >
+          <p className="text-lg mb-2" style={{ color: BRAND.colors.textMuted }}>After</p>
+          <p className="text-xl" style={{ color: BRAND.colors.text }}>Claude reads CLAUDE.md and <strong>immediately knows</strong></p>
+        </motion.div>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mt-12 p-8 rounded-2xl text-center"
+        style={{ background: BRAND.gradient }}
+      >
+        <p className="text-5xl font-bold text-white mb-2">50%</p>
+        <p className="text-white/80">reduction in exploration time per task</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// Memory System
+function Slide7() {
+  return (
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}>
+          <Database className="w-10 h-10 text-white" />
+        </div>
+        <div>
+          <h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.colors.text }}>Memory System</h2>
+          <p style={{ color: BRAND.colors.textMuted }}>Session Persistence</p>
+        </div>
+      </motion.div>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="text-xl italic mb-8 max-w-3xl"
+        style={{ color: BRAND.colors.textMuted }}
+      >
+        &ldquo;Short-term via context management and checkpointing. Long-term via CLAUDE.md updates and skills refinement.&rdquo;
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="flex-1"
+      >
+        <p className="text-lg font-semibold mb-4" style={{ color: BRAND.colors.text }}>Three-Tier Architecture</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// Memory Tiers
+function Slide8() {
+  const tiers = [
+    { tier: "Tier 1", name: "Shared Knowledge", desc: "Git committed • decisions.md, context.md, conventions.md", color: BRAND.colors.orange },
+    { tier: "Tier 2", name: "Session Memory", desc: "Git ignored • Per-developer session logs", color: BRAND.colors.purple },
+    { tier: "Tier 3", name: "Task Context", desc: "Runtime • Current task focus", color: "#4F46E5" },
+  ];
+
+  return (
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.h2
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="text-4xl font-bold mb-8"
+        style={{ color: BRAND.colors.text }}
+      >
+        Three-Tier Memory
+      </motion.h2>
+      <div className="flex-1 flex flex-col gap-4">
+        {tiers.map((item, i) => (
+          <motion.div
+            key={item.tier}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + i * 0.15 }}
+            className="p-6 rounded-2xl border-l-4 bg-gray-50"
+            style={{ borderColor: item.color }}
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-mono px-3 py-1 rounded-full text-white" style={{ background: item.color }}>
+                {item.tier}
+              </span>
+              <h3 className="text-xl font-bold" style={{ color: BRAND.colors.text }}>{item.name}</h3>
+            </div>
+            <p className="mt-2 ml-20" style={{ color: BRAND.colors.textMuted }}>{item.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Key Components
+function Slide9() {
+  const components = [
+    { name: "Skills", desc: "Domain knowledge loaded on-demand" },
+    { name: "Commands", desc: "/commit, /pr, /verify, /fix-ci" },
+    { name: "Agents", desc: "Specialized configurations" },
+    { name: "Hooks", desc: "Automation scripts" },
+  ];
+
+  return (
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.h2
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="text-4xl font-bold mb-8"
+        style={{ color: BRAND.colors.text }}
+      >
+        Key Components
+      </motion.h2>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        {components.map((item, i) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + i * 0.1 }}
+            className="p-6 rounded-2xl border border-gray-200 hover:border-gray-300 transition-colors"
+          >
+            <h3 className="text-2xl font-bold mb-2" style={{ color: BRAND.colors.text }}>{item.name}</h3>
+            <p style={{ color: BRAND.colors.textMuted }}>{item.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Summary Slide
+function Slide10() {
+  const benefits = [
+    "Claude reads CLAUDE.md first — instant context",
+    "Memory persists across sessions",
+    "Skills loaded on-demand — no bloat",
+    "Slash commands for common tasks",
+  ];
+
+  return (
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.h2
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="text-4xl font-bold mb-8"
+        style={{ color: BRAND.colors.text }}
+      >
+        What This Means
       </motion.h2>
       <div className="flex-1 flex items-center">
-        <ul className="space-y-6 text-2xl">
-          {items.map((item, index) => (
+        <ul className="space-y-6">
+          {benefits.map((item, i) => (
             <motion.li
-              key={index}
+              key={i}
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              className="flex items-start gap-4"
+              transition={{ delay: 0.2 + i * 0.1 }}
+              className="flex items-start gap-4 text-xl"
             >
-              <span
-                className="w-3 h-3 rounded-full mt-2 flex-shrink-0"
-                style={{ background: BRAND.gradient }}
-              />
+              <Zap className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: BRAND.colors.orange }} />
               <span style={{ color: BRAND.colors.text }}>{item}</span>
             </motion.li>
           ))}
@@ -239,117 +436,16 @@ function BulletSlide({
   );
 }
 
-// Image Slide Template
-function ImageSlide({
-  title,
-  imageUrl,
-  caption,
-}: {
-  title?: string;
-  imageUrl?: string;
-  caption?: string;
-}) {
+// End Slide
+function Slide11() {
   return (
-    <div className="flex flex-col h-full px-16 py-12">
-      <motion.h2
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-4xl md:text-5xl font-bold mb-8"
-        style={{ color: BRAND.colors.text }}
-      >
-        {title || "Slide Title"}
-      </motion.h2>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        className="flex-1 flex flex-col items-center justify-center"
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={title || "Slide image"}
-            className="max-h-[60vh] rounded-2xl shadow-2xl"
-          />
-        ) : (
-          <div
-            className="w-full max-w-4xl h-96 rounded-2xl border-2 border-dashed flex items-center justify-center"
-            style={{ borderColor: BRAND.colors.textMuted + "40" }}
-          >
-            <p style={{ color: BRAND.colors.textMuted }}>Image placeholder</p>
-          </div>
-        )}
-        {caption && (
-          <p className="mt-4 text-lg" style={{ color: BRAND.colors.textMuted }}>
-            {caption}
-          </p>
-        )}
-      </motion.div>
-    </div>
-  );
-}
-
-// Quote Slide Template
-function QuoteSlide({
-  quote,
-  author,
-  role,
-}: {
-  quote?: string;
-  author?: string;
-  role?: string;
-}) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full px-16 text-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
-        className="max-w-4xl"
-      >
-        <div
-          className="text-8xl font-bold mb-4"
-          style={{ background: BRAND.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-        >
-          &ldquo;
-        </div>
-        <blockquote
-          className="text-3xl md:text-4xl font-medium leading-relaxed mb-8"
-          style={{ color: BRAND.colors.text }}
-        >
-          {quote || "Quote text goes here"}
-        </blockquote>
-        <div>
-          <p className="text-xl font-semibold" style={{ color: BRAND.colors.text }}>
-            {author || "Author Name"}
-          </p>
-          <p className="text-lg" style={{ color: BRAND.colors.textMuted }}>
-            {role || "Title, Company"}
-          </p>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// End Slide Template
-function EndSlide({ title, subtitle }: { title?: string; subtitle?: string }) {
-  return (
-    <div
-      className="flex flex-col items-center justify-center h-full text-center px-16"
-      style={{ background: BRAND.gradient }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white">
-          {title || "Thank You"}
+    <div className="flex flex-col items-center justify-center h-full text-center px-16" style={{ background: BRAND.gradient }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
+          Ready for AI-First Development
         </h1>
         <p className="text-xl md:text-2xl text-white/80 max-w-2xl">
-          {subtitle || "Questions?"}
+          Questions?
         </p>
       </motion.div>
     </div>
@@ -357,17 +453,21 @@ function EndSlide({ title, subtitle }: { title?: string; subtitle?: string }) {
 }
 
 // ============================================================================
-// SAMPLE SLIDES (Template Examples)
+// SLIDES ARRAY
 // ============================================================================
 
 const slides = [
-  <TitleSlide key="1" title="Presentation Title" subtitle="Your subtitle or tagline here" />,
-  <ContentSlide key="2" title="Content Slide" />,
-  <TwoColumnSlide key="3" title="Two Columns" />,
-  <BulletSlide key="4" title="Key Points" />,
-  <ImageSlide key="5" title="Visual Slide" />,
-  <QuoteSlide key="6" quote="Add your quote here" author="Author" role="Title, Company" />,
-  <EndSlide key="7" />,
+  <Slide1 key="1" />,
+  <Slide2 key="2" />,
+  <Slide3 key="3" />,
+  <Slide4 key="4" />,
+  <Slide5 key="5" />,
+  <Slide6 key="6" />,
+  <Slide7 key="7" />,
+  <Slide8 key="8" />,
+  <Slide9 key="9" />,
+  <Slide10 key="10" />,
+  <Slide11 key="11" />,
 ];
 
 // ============================================================================
@@ -399,7 +499,6 @@ export default function Presentation() {
     }
   }, [currentSlide]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") {
@@ -408,33 +507,18 @@ export default function Presentation() {
         prevSlide();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Slide animation variants
   const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
+    enter: (direction: number) => ({ x: direction > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (direction: number) => ({ x: direction < 0 ? "100%" : "-100%", opacity: 0 }),
   };
 
   return (
-    <div
-      className="relative w-screen h-screen overflow-hidden"
-      style={{ backgroundColor: BRAND.colors.background }}
-    >
-      {/* Slide Content */}
+    <div className="relative w-screen h-screen overflow-hidden" style={{ backgroundColor: BRAND.colors.background }}>
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={currentSlide}
@@ -443,35 +527,30 @@ export default function Presentation() {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
-          }}
+          transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
           className="absolute inset-0"
         >
           {slides[currentSlide]}
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Arrows */}
+      {/* Navigation */}
       <button
         onClick={prevSlide}
         disabled={currentSlide === 0}
         className="absolute left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-        style={{ color: BRAND.colors.text }}
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-6 h-6" style={{ color: BRAND.colors.text }} />
       </button>
       <button
         onClick={nextSlide}
         disabled={currentSlide === slides.length - 1}
         className="absolute right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur shadow-lg hover:bg-white transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-        style={{ color: BRAND.colors.text }}
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-6 h-6" style={{ color: BRAND.colors.text }} />
       </button>
 
-      {/* Slide Indicators */}
+      {/* Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
         {slides.map((_, index) => (
           <button
@@ -486,15 +565,12 @@ export default function Presentation() {
         ))}
       </div>
 
-      {/* Slide Counter */}
-      <div
-        className="absolute bottom-6 right-6 text-sm font-mono"
-        style={{ color: BRAND.colors.textMuted }}
-      >
+      {/* Counter */}
+      <div className="absolute bottom-6 right-6 text-sm font-mono" style={{ color: BRAND.colors.textMuted }}>
         {currentSlide + 1} / {slides.length}
       </div>
 
-      {/* Logo in corner */}
+      {/* Logo */}
       <div className="absolute top-6 left-6">
         <LeapterLogo className="h-8 w-auto" />
       </div>
