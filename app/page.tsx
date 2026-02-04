@@ -440,34 +440,39 @@ function Slide11() {
 // SLIDE 12 - Slash Commands
 function Slide12() {
   const commands = [
-    { cmd: "/verify", desc: "Run all checks", runs: "pnpm typecheck && pnpm lint && pnpm test", saves: "~30s typing" }, 
-    { cmd: "/commit", desc: "Format commit", runs: "Conventional commit with scope", saves: "Consistent history" }, 
-    { cmd: "/pr", desc: "Create PR", runs: "gh pr create with template", saves: "~2min setup" }, 
-    { cmd: "/fix", desc: "Fix errors", runs: "Read error → Apply fix → Verify", saves: "No copy-paste" }, 
-    { cmd: "/fix-ci", desc: "Fix CI", runs: "Fetch logs → Diagnose → Fix → Push", saves: "~5min debugging" }, 
-    { cmd: "/simplify", desc: "Clean up code", runs: "Remove dead code, extract functions", saves: "Cleaner PRs" }
+    { cmd: "/verify", desc: "Full verification suite" }, 
+    { cmd: "/commit", desc: "Create git commit" }, 
+    { cmd: "/pr", desc: "Create pull request" }, 
+    { cmd: "/commit-push-pr", desc: "Commit, push, and create PR" }, 
+    { cmd: "/fix", desc: "Fix build/type errors" }, 
+    { cmd: "/fix-ci", desc: "Fix CI pipeline errors" },
+    { cmd: "/fix-pr-findings", desc: "Address PR review comments" },
+    { cmd: "/quick-fix", desc: "Auto-fix lint + format" },
+    { cmd: "/simplify", desc: "Clean up code" }, 
+    { cmd: "/create-e2e-test", desc: "Create Playwright E2E test" },
+    { cmd: "/checkpoint", desc: "Save session state" },
+    { cmd: "/decision", desc: "Log ADR" },
   ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Command className="w-10 h-10 text-white" /></div>
         <div>
           <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Slash Commands</h2>
           <p style={{ color: BRAND.colors.textMuted }}>15+ workflow shortcuts in .claude/commands/</p>
         </div>
       </motion.div>
-      <div className="flex-1 grid grid-cols-2 gap-4">
+      <div className="flex-1 grid grid-cols-3 gap-3">
         {commands.map((c, i) => (
-          <motion.div key={c.cmd} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.05 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
-            <div className="flex items-center justify-between mb-2">
-              <code className="text-xl font-bold" style={{ color: BRAND.colors.orange }}>{c.cmd}</code>
-              <span className="text-xs px-2 py-1 rounded-full bg-gray-200" style={{ color: BRAND.colors.textMuted }}>{c.saves}</span>
-            </div>
-            <p className="text-sm font-medium mb-1" style={{ color: BRAND.colors.text }}>{c.desc}</p>
-            <p className="text-xs font-mono" style={{ color: BRAND.colors.textMuted }}>{c.runs}</p>
+          <motion.div key={c.cmd} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.03 }} className="p-3 rounded-xl bg-gray-50 border border-gray-200">
+            <code className="text-base font-bold block mb-1" style={{ color: BRAND.colors.orange }}>{c.cmd}</code>
+            <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{c.desc}</p>
           </motion.div>
         ))}
       </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Usage:</strong> Type the command and Claude executes the full workflow. No remembering complex sequences.</p>
+      </motion.div>
     </div>
   );
 }
