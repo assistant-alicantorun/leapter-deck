@@ -65,17 +65,31 @@ function Slide3() {
 
 // SLIDE 4 - CLAUDE.md Brain
 function Slide4() {
+  const sections = [
+    { name: "Developer Workflow", desc: "Step-by-step guide: task assessment matrix, TDD requirements" },
+    { name: "Task Assessment", desc: "Simple fix → implement immediately; Complex feature → Plan Mode first" },
+    { name: "MCP Verification", desc: "How to verify with mcp__supabase, mcp__playwright" },
+    { name: "Agent Usage Guide", desc: "Trigger keywords, auto-invocation patterns for each agent" },
+    { name: "Tech Stack", desc: "Exact versions: Next.js 15.5.9, React 19.2.3, pnpm workspace" },
+    { name: "Commands Reference", desc: "All slash commands: /verify, /commit, /fix-ci, /checkpoint..." },
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Brain className="w-10 h-10 text-white" /></div>
-        <div><h2 className="text-4xl md:text-5xl font-bold" style={{ color: BRAND.colors.text }}>CLAUDE.md</h2><p style={{ color: BRAND.colors.textMuted }}>The Brain</p></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>CLAUDE.md</h2><p style={{ color: BRAND.colors.textMuted }}>The Brain — Claude reads this FIRST</p></div>
       </motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex-1 flex items-center">
-        <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 max-w-3xl">
-          <p className="text-xl italic mb-6" style={{ color: BRAND.colors.textMuted }}>&ldquo;Write it like onboarding a dev who starts coding in 5 minutes&rdquo;</p>
-          <p className="text-lg" style={{ color: BRAND.colors.text }}>Not documentation. <strong>Instructions.</strong></p>
-        </div>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Not documentation. Instructions. Write it like onboarding a dev who starts coding in 5 minutes.&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-3">
+        {sections.map((s, i) => (
+          <motion.div key={s.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+            <p className="font-bold text-sm mb-1" style={{ color: BRAND.colors.orange }}>{s.name}</p>
+            <p className="text-sm" style={{ color: BRAND.colors.textMuted }}>{s.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Why it matters:</strong> Before, Claude explored randomly. Now it reads CLAUDE.md and <em>immediately knows</em> what commands to run, what patterns to follow, what to avoid, and how to verify work.</p>
       </motion.div>
     </div>
   );
@@ -131,18 +145,27 @@ function Slide5() {
 
 // SLIDE 6 - Three-Tier Memory
 function Slide6() {
-  const tiers = [{ tier: "Tier 1", name: "Shared", items: "decisions.md • context.md • conventions.md", note: "Git ✓", color: BRAND.colors.orange }, { tier: "Tier 2", name: "Sessions", items: "sessions/2026-02-04.md • Personal progress", note: "Git ✗", color: BRAND.colors.purple }, { tier: "Tier 3", name: "Ephemeral", items: "Current conversation • Active task", note: "Context", color: "#4F46E5" }];
+  const tiers = [
+    { tier: "Tier 1", name: "Shared Knowledge", items: "decisions.md • context.md • conventions.md", desc: "Architectural decisions, project context, coding standards — committed to git, shared across team", note: "Git ✓", color: BRAND.colors.orange }, 
+    { tier: "Tier 2", name: "Session Memory", items: "sessions/2026-02-04.md • Personal checkpoints", desc: "Per-developer progress logs, .gitignored — survives /clear and /compact", note: "Git ✗", color: BRAND.colors.purple }, 
+    { tier: "Tier 3", name: "Ephemeral", items: "Current conversation • Active task context", desc: "Lost on session end — but checkpointed automatically to Tier 2", note: "Context", color: "#4F46E5" }
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Database className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Three-Tier Memory</h2>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Three-Tier Memory</h2><p style={{ color: BRAND.colors.textMuted }}>Session persistence across /clear and /compact</p></div>
       </motion.div>
-      <div className="flex-1 flex flex-col gap-4">
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-sm italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Short-term via checkpointing; Long-term via shared decisions and skills&rdquo;</motion.p>
+      <div className="flex-1 flex flex-col gap-3">
         {tiers.map((item, i) => (
-          <motion.div key={item.tier} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.15 }} className="p-5 rounded-2xl border-l-4 bg-gray-50 flex items-center justify-between" style={{ borderColor: item.color }}>
-            <div className="flex items-center gap-4"><span className="text-xs font-mono px-3 py-1 rounded-full text-white" style={{ background: item.color }}>{item.tier}</span><div><h3 className="text-lg font-bold" style={{ color: BRAND.colors.text }}>{item.name}</h3><p className="text-sm" style={{ color: BRAND.colors.textMuted }}>{item.items}</p></div></div>
-            <span className="text-xs font-mono px-2 py-1 rounded bg-gray-200">{item.note}</span>
+          <motion.div key={item.tier} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.15 }} className="p-4 rounded-2xl border-l-4 bg-gray-50" style={{ borderColor: item.color }}>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3"><span className="text-xs font-mono px-3 py-1 rounded-full text-white" style={{ background: item.color }}>{item.tier}</span><h3 className="text-lg font-bold" style={{ color: BRAND.colors.text }}>{item.name}</h3></div>
+              <span className="text-xs font-mono px-2 py-1 rounded bg-gray-200">{item.note}</span>
+            </div>
+            <p className="text-sm font-mono mb-1" style={{ color: BRAND.colors.orange }}>{item.items}</p>
+            <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{item.desc}</p>
           </motion.div>
         ))}
       </div>
@@ -152,16 +175,26 @@ function Slide6() {
 
 // SLIDE 7 - Session Commands
 function Slide7() {
-  const commands = [{ cmd: "/checkpoint", desc: "Save progress", when: "After features" }, { cmd: "/decision", desc: "Log ADR", when: "After arch choice" }, { cmd: "/handoff", desc: "Generate handoff", when: "Passing to teammate" }];
+  const commands = [
+    { cmd: "/checkpoint", desc: "Save progress to session file", when: "After features", detail: "Appends current state to sessions/YYYY-MM-DD.md — survives /clear" }, 
+    { cmd: "/decision", desc: "Log Architectural Decision Record", when: "After arch choice", detail: "Prompts for title, context, options, decision, consequences → saved to decisions.md" }, 
+    { cmd: "/handoff", desc: "Generate handoff document", when: "Passing to teammate", detail: "Creates summary of current state, pending work, and context for next developer" }
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>Session Commands</motion.h2>
-      <div className="flex-1 flex flex-col gap-4">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><GitBranch className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Session Commands</h2><p style={{ color: BRAND.colors.textMuted }}>Memory persistence shortcuts</p></div>
+      </motion.div>
+      <div className="flex-1 flex flex-col gap-3">
         {commands.map((item, i) => (
-          <motion.div key={item.cmd} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200 flex items-center gap-4">
-            <code className="text-lg font-bold px-3 py-1 rounded" style={{ background: BRAND.gradient, color: "white" }}>{item.cmd}</code>
-            <span className="text-lg flex-1" style={{ color: BRAND.colors.text }}>{item.desc}</span>
-            <span className="text-sm" style={{ color: BRAND.colors.textMuted }}>↳ {item.when}</span>
+          <motion.div key={item.cmd} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+            <div className="flex items-center gap-4 mb-2">
+              <code className="text-lg font-bold px-3 py-1 rounded" style={{ background: BRAND.gradient, color: "white" }}>{item.cmd}</code>
+              <span className="text-lg flex-1 font-medium" style={{ color: BRAND.colors.text }}>{item.desc}</span>
+              <span className="text-xs px-2 py-1 rounded bg-gray-200" style={{ color: BRAND.colors.textMuted }}>{item.when}</span>
+            </div>
+            <p className="text-sm ml-1" style={{ color: BRAND.colors.textMuted }}>{item.detail}</p>
           </motion.div>
         ))}
       </div>
@@ -171,24 +204,43 @@ function Slide7() {
 
 // SLIDE 8 - Docs Before/After
 function Slide8() {
+  const newStructure = [
+    { path: "docs/index.md", desc: "Navigation hub — links to everything" },
+    { path: "docs/DEVELOPER_HANDBOOK.md", desc: "New dev onboarding guide (272 lines)" },
+    { path: "docs/architecture/", desc: "System design docs" },
+    { path: "docs/sop/", desc: "Standard operating procedures" },
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><FileText className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Docs Consolidation</h2>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Docs Consolidation</h2><p style={{ color: BRAND.colors.textMuted }}>+336 lines, single source of truth</p></div>
       </motion.div>
-      <div className="flex-1 grid grid-cols-2 gap-8">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-6 rounded-2xl bg-red-50 border border-red-200">
-          <p className="text-sm font-mono text-red-600 mb-4">BEFORE</p>
-          <ul className="space-y-2" style={{ color: BRAND.colors.textMuted }}><li>• /documentation/</li><li>• /developer-docs/</li><li>• Random READMEs</li></ul>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-red-50 border border-red-200">
+          <p className="text-sm font-mono text-red-600 mb-3">BEFORE</p>
+          <ul className="space-y-2 text-sm" style={{ color: BRAND.colors.textMuted }}>
+            <li>• /documentation/ folder</li>
+            <li>• /developer-docs/ folder</li>
+            <li>• Random READMEs scattered</li>
+            <li>• MCP guide at root level</li>
+          </ul>
           <p className="mt-4 text-red-600 font-bold">5 places to check</p>
+          <p className="text-xs mt-1" style={{ color: BRAND.colors.textMuted }}>Claude wastes tokens searching multiple locations</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-6 rounded-2xl bg-green-50 border border-green-200">
-          <p className="text-sm font-mono text-green-600 mb-4">AFTER</p>
-          <ul className="space-y-2" style={{ color: BRAND.colors.textMuted }}><li>• docs/index.md</li><li>• docs/HANDBOOK.md</li><li>• docs/architecture/</li></ul>
-          <p className="mt-4 text-green-600 font-bold">1 place: /docs/</p>
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl bg-green-50 border border-green-200">
+          <p className="text-sm font-mono text-green-600 mb-3">AFTER</p>
+          <ul className="space-y-2 text-sm">
+            {newStructure.map((item, i) => (
+              <li key={i}><span className="font-mono" style={{ color: BRAND.colors.text }}>{item.path}</span><br/><span style={{ color: BRAND.colors.textMuted }}>{item.desc}</span></li>
+            ))}
+          </ul>
+          <p className="mt-3 text-green-600 font-bold">1 place: /docs/</p>
         </motion.div>
       </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Why it matters:</strong> New devs find everything in one place. Claude reads docs/index.md first. Keystatic CMS still works with new paths.</p>
+      </motion.div>
     </div>
   );
 }
