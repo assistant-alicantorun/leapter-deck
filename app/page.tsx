@@ -505,8 +505,58 @@ function Slide13() {
   );
 }
 
-// SLIDE 14 - Agent System
+// SLIDE 14 - Workflow Examples
 function Slide14() {
+  const newFeature = ["Assess complexity", "Design + approval", "Write failing tests", "Implement", "MCP verify", "/verify", "/simplify", "/commit-push-pr", "Monitor CI"];
+  const bugFix = ["Reproduce bug", "Write failing test", "Implement fix", "Verify passes", "pnpm test", "/commit → /pr"];
+  const dbMigration = ["Plan schema", "Create migration", "supabase:migrations:up", "MCP verify tables", "Integration tests", "/commit"];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><GitBranch className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Workflow Examples</h2><p style={{ color: BRAND.colors.textMuted }}>Concrete patterns from CLAUDE.md</p></div>
+      </motion.div>
+      <div className="flex-1 grid grid-cols-3 gap-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: BRAND.colors.orange }}>🚀 New Feature</h3>
+          <ol className="space-y-1">
+            {newFeature.map((step, i) => (
+              <li key={i} className="text-xs flex items-start gap-2"><span className="font-bold text-gray-400">{i+1}.</span><span style={{ color: BRAND.colors.text }}>{step}</span></li>
+            ))}
+          </ol>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: BRAND.colors.purple }}>🐛 Bug Fix</h3>
+          <ol className="space-y-1">
+            {bugFix.map((step, i) => (
+              <li key={i} className="text-xs flex items-start gap-2"><span className="font-bold text-gray-400">{i+1}.</span><span style={{ color: BRAND.colors.text }}>{step}</span></li>
+            ))}
+          </ol>
+          <div className="mt-3 p-2 rounded-lg bg-purple-50">
+            <p className="text-xs" style={{ color: BRAND.colors.purple }}><strong>Key:</strong> Test captures bug BEFORE fix</p>
+          </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "#10B981" }}>🗃️ DB Migration</h3>
+          <ol className="space-y-1">
+            {dbMigration.map((step, i) => (
+              <li key={i} className="text-xs flex items-start gap-2"><span className="font-bold text-gray-400">{i+1}.</span><span style={{ color: BRAND.colors.text }}>{step}</span></li>
+            ))}
+          </ol>
+          <div className="mt-3 p-2 rounded-lg bg-green-50">
+            <p className="text-xs text-green-600"><strong>Verify:</strong> mcp__supabase__list_tables</p>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Pattern:</strong> Every workflow ends with verification. Claude follows these recipes — no improvising dangerous paths.</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 15 - Agent System
+function Slide15() {
   const agents = [
     { name: "postgres-expert", model: "Sonnet", triggers: "database, schema, migration, RLS", when: "After DB changes" },
     { name: "react-form-builder", model: "Sonnet", triggers: "form, validation, react-hook-form", when: "Creating forms" },
@@ -541,8 +591,8 @@ function Slide14() {
   );
 }
 
-// SLIDE 15 - Key Components
-function Slide15() {
+// SLIDE 16 - Key Components
+function Slide16() {
   const components = [
     { name: "Skills", desc: "On-demand domain knowledge", count: "6 skills", examples: "TDD, debugging, frontend-design, mcp-builder", location: ".claude/skills/" }, 
     { name: "Commands", desc: "Slash command shortcuts", count: "15+ commands", examples: "/verify, /commit, /pr, /fix, /checkpoint", location: ".claude/commands/" }, 
@@ -570,8 +620,8 @@ function Slide15() {
   );
 }
 
-// SLIDE 16 - Summary
-function Slide16() {
+// SLIDE 17 - Summary
+function Slide17() {
   const stats = [
     { label: "Total PRs", value: "10" },
     { label: "Lines Added", value: "~13,700" },
@@ -615,8 +665,8 @@ function Slide16() {
   );
 }
 
-// SLIDE 17 - Three Phase Roadmap
-function Slide17() {
+// SLIDE 18 - Three Phase Roadmap
+function Slide18() {
   const phases = [
     { phase: "Phase 1", name: "Developer Experience", status: "✅ Complete", desc: "Claude Code best practices, CLAUDE.md, memory system, hooks, commands", color: "#10B981" },
     { phase: "Phase 2", name: "Autonomous Agent", status: "🚧 In Progress", desc: "OpenClaw on GCP, full sudo access, Supabase Docker, screenshot validation", color: BRAND.colors.orange },
@@ -649,8 +699,8 @@ function Slide17() {
   );
 }
 
-// SLIDE 18 - Phase 2 Detail
-function Slide18() {
+// SLIDE 19 - Phase 2 Detail
+function Slide19() {
   const setup = [
     { item: "Google Cloud VM", desc: "Dedicated instance for OpenClaw bot" },
     { item: "OpenClaw Agent", desc: "Full sudo/admin mode, complete autonomy" },
@@ -705,8 +755,8 @@ function Slide18() {
   );
 }
 
-// SLIDE 19 - Phase 3 Vision (Mission Control Pattern)
-function Slide19() {
+// SLIDE 20 - Phase 3 Vision (Mission Control Pattern)
+function Slide20() {
   const squad = [
     { name: "Jarvis", role: "Squad Lead", focus: "Coordinates, delegates, monitors" },
     { name: "Shuri", role: "Product Analyst", focus: "Testing, edge cases, UX issues" },
@@ -777,8 +827,8 @@ function Slide19() {
   );
 }
 
-// SLIDE 20 - End
-function Slide20() {
+// SLIDE 21 - End
+function Slide21() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -790,7 +840,7 @@ function Slide20() {
   );
 }
 
-const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />];
+const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />, <Slide21 key="21" />];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
