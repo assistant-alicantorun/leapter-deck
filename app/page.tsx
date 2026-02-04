@@ -472,8 +472,41 @@ function Slide12() {
   );
 }
 
-// SLIDE 13 - Agent System
+// SLIDE 13 - Developer Workflow Principles
 function Slide13() {
+  const principles = [
+    { name: "Ask When Uncertain", desc: "Use AskUserQuestion for ambiguous requirements, multiple approaches, or high-risk decisions. Never guess when cost of wrong is high.", icon: "❓" },
+    { name: "Task Assessment", desc: "Simple → implement. Moderate → test first. Complex → Plan Mode. Unclear → ask questions.", icon: "📋" },
+    { name: "Test-Driven Development", desc: "RED (failing test) → GREEN (minimal code) → REFACTOR. No production code without test first.", icon: "🧪" },
+    { name: "MCP Self-Verification", desc: "Supabase MCP verifies DB. Playwright MCP takes screenshots. PostHog MCP checks feature flags.", icon: "✅" },
+  ];
+  return (
+    <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Brain className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Developer Workflow</h2><p style={{ color: BRAND.colors.textMuted }}>Guiding principles in CLAUDE.md</p></div>
+      </motion.div>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-sm italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Plan before coding. Test before implementation. Ask when uncertain. Verify before claiming done.&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        {principles.map((p, i) => (
+          <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">{p.icon}</span>
+              <h3 className="text-lg font-bold" style={{ color: BRAND.colors.text }}>{p.name}</h3>
+            </div>
+            <p className="text-sm" style={{ color: BRAND.colors.textMuted }}>{p.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Why it matters:</strong> Claude stops guessing. Questions save time. Tests catch bugs early. MCP verification means Claude can see what it built.</p>
+      </motion.div>
+    </div>
+  );
+}
+
+// SLIDE 14 - Agent System
+function Slide14() {
   const agents = [
     { name: "postgres-expert", model: "Sonnet", triggers: "database, schema, migration, RLS", when: "After DB changes" },
     { name: "react-form-builder", model: "Sonnet", triggers: "form, validation, react-hook-form", when: "Creating forms" },
@@ -508,8 +541,8 @@ function Slide13() {
   );
 }
 
-// SLIDE 14 - Key Components
-function Slide14() {
+// SLIDE 15 - Key Components
+function Slide15() {
   const components = [
     { name: "Skills", desc: "On-demand domain knowledge", count: "6 skills", examples: "TDD, debugging, frontend-design, mcp-builder", location: ".claude/skills/" }, 
     { name: "Commands", desc: "Slash command shortcuts", count: "15+ commands", examples: "/verify, /commit, /pr, /fix, /checkpoint", location: ".claude/commands/" }, 
@@ -537,8 +570,8 @@ function Slide14() {
   );
 }
 
-// SLIDE 15 - Summary
-function Slide15() {
+// SLIDE 16 - Summary
+function Slide16() {
   const stats = [
     { label: "Total PRs", value: "10" },
     { label: "Lines Added", value: "~13,700" },
@@ -582,8 +615,8 @@ function Slide15() {
   );
 }
 
-// SLIDE 16 - Three Phase Roadmap
-function Slide16() {
+// SLIDE 17 - Three Phase Roadmap
+function Slide17() {
   const phases = [
     { phase: "Phase 1", name: "Developer Experience", status: "✅ Complete", desc: "Claude Code best practices, CLAUDE.md, memory system, hooks, commands", color: "#10B981" },
     { phase: "Phase 2", name: "Autonomous Agent", status: "🚧 In Progress", desc: "OpenClaw on GCP, full sudo access, Supabase Docker, screenshot validation", color: BRAND.colors.orange },
@@ -616,8 +649,8 @@ function Slide16() {
   );
 }
 
-// SLIDE 17 - Phase 2 Detail
-function Slide17() {
+// SLIDE 18 - Phase 2 Detail
+function Slide18() {
   const setup = [
     { item: "Google Cloud VM", desc: "Dedicated instance for OpenClaw bot" },
     { item: "OpenClaw Agent", desc: "Full sudo/admin mode, complete autonomy" },
@@ -672,8 +705,8 @@ function Slide17() {
   );
 }
 
-// SLIDE 18 - Phase 3 Vision (Mission Control Pattern)
-function Slide18() {
+// SLIDE 19 - Phase 3 Vision (Mission Control Pattern)
+function Slide19() {
   const squad = [
     { name: "Jarvis", role: "Squad Lead", focus: "Coordinates, delegates, monitors" },
     { name: "Shuri", role: "Product Analyst", focus: "Testing, edge cases, UX issues" },
@@ -744,8 +777,8 @@ function Slide18() {
   );
 }
 
-// SLIDE 19 - End
-function Slide19() {
+// SLIDE 20 - End
+function Slide20() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-24 pt-28" style={{ background: BRAND.gradient }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -757,7 +790,7 @@ function Slide19() {
   );
 }
 
-const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />];
+const slides = [<Slide1 key="1" />, <Slide2 key="2" />, <Slide3 key="3" />, <Slide4 key="4" />, <Slide5 key="5" />, <Slide6 key="6" />, <Slide7 key="7" />, <Slide8 key="8" />, <Slide9 key="9" />, <Slide10 key="10" />, <Slide11 key="11" />, <Slide12 key="12" />, <Slide13 key="13" />, <Slide14 key="14" />, <Slide15 key="15" />, <Slide16 key="16" />, <Slide17 key="17" />, <Slide18 key="18" />, <Slide19 key="19" />, <Slide20 key="20" />];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
