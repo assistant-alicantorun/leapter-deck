@@ -672,48 +672,73 @@ function Slide17() {
   );
 }
 
-// SLIDE 18 - Phase 3 Vision
+// SLIDE 18 - Phase 3 Vision (Mission Control Pattern)
 function Slide18() {
-  const agents = [
-    { name: "Frontend Agent", focus: "UI/UX, React components, styling" },
-    { name: "Backend Agent", focus: "APIs, database, business logic" },
-    { name: "QA Agent", focus: "Testing, validation, edge cases" },
-    { name: "DevOps Agent", focus: "Deployment, infra, monitoring" },
+  const squad = [
+    { name: "Jarvis", role: "Squad Lead", focus: "Coordinates, delegates, monitors" },
+    { name: "Shuri", role: "Product Analyst", focus: "Testing, edge cases, UX issues" },
+    { name: "Fury", role: "Researcher", focus: "Deep research, sources, receipts" },
+    { name: "Vision", role: "SEO Analyst", focus: "Keywords, search intent, ranking" },
+    { name: "Loki", role: "Content Writer", focus: "Copy, blogs, documentation" },
+    { name: "Friday", role: "Developer", focus: "Code, tests, implementation" },
   ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-3">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.colors.purple }}><Users className="w-10 h-10 text-white" /></div>
-        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Phase 3: Multi-Agent Swarm</h2><p style={{ color: BRAND.colors.textMuted }}>Command center orchestrating specialized agents</p></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Phase 3: Mission Control</h2><p style={{ color: BRAND.colors.textMuted }}>10 agents working like a real team (proven pattern)</p></div>
       </motion.div>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;A botnet of AI agents, each specialized, working in parallel on different parts of the system&rdquo;</motion.p>
-      <div className="flex-1 grid grid-cols-2 gap-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
-          <h3 className="text-lg font-bold mb-4" style={{ color: BRAND.colors.text }}>Specialized Agents</h3>
-          <div className="grid grid-cols-2 gap-3">
-            {agents.map((a, i) => (
-              <div key={i} className="p-3 rounded-xl border border-gray-200 bg-white">
-                <p className="font-bold text-sm" style={{ color: BRAND.colors.orange }}>{a.name}</p>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-sm italic mb-3" style={{ color: BRAND.colors.textMuted }}>&ldquo;Each agent is an OpenClaw session with its own SOUL.md, memory files, cron schedule, and tools&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-3 gap-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200 col-span-2">
+          <h3 className="text-sm font-bold mb-3" style={{ color: BRAND.colors.text }}>The Squad (Specialized Sessions)</h3>
+          <div className="grid grid-cols-3 gap-2">
+            {squad.map((a, i) => (
+              <div key={i} className="p-2 rounded-lg border border-gray-200 bg-white">
+                <p className="font-bold text-xs" style={{ color: BRAND.colors.orange }}>{a.name}</p>
+                <p className="text-xs font-medium" style={{ color: BRAND.colors.text }}>{a.role}</p>
                 <p className="text-xs" style={{ color: BRAND.colors.textMuted }}>{a.focus}</p>
               </div>
             ))}
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl border-2 border-dashed" style={{ borderColor: BRAND.colors.purple }}>
-          <h3 className="text-lg font-bold mb-3" style={{ color: BRAND.colors.purple }}>Command Center</h3>
-          <ul className="space-y-2 text-sm" style={{ color: BRAND.colors.textMuted }}>
-            <li>• <strong>Orchestration:</strong> Assign tasks to appropriate agents</li>
-            <li>• <strong>Coordination:</strong> Manage dependencies between agents</li>
-            <li>• <strong>Monitoring:</strong> Track progress, detect conflicts</li>
-            <li>• <strong>Escalation:</strong> Human review for critical decisions</li>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-2xl border-2" style={{ borderColor: BRAND.colors.purple, background: "rgb(250 245 255)" }}>
+          <h3 className="text-sm font-bold mb-2" style={{ color: BRAND.colors.purple }}>Mission Control UI</h3>
+          <ul className="space-y-1 text-xs" style={{ color: BRAND.colors.textMuted }}>
+            <li>• Shared task database (Convex)</li>
+            <li>• @mentions → notifications</li>
+            <li>• Thread subscriptions</li>
+            <li>• Activity feed</li>
+            <li>• Daily standups</li>
           </ul>
-          <div className="mt-4 p-3 rounded-lg bg-purple-50">
-            <p className="text-xs" style={{ color: BRAND.colors.purple }}><strong>Vision:</strong> Describe a feature → agents implement it end-to-end</p>
-          </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-sm font-bold mb-2" style={{ color: BRAND.colors.text }}>Heartbeat System</h3>
+          <p className="text-xs mb-2" style={{ color: BRAND.colors.textMuted }}>Every 15 min, each agent wakes:</p>
+          <ul className="text-xs space-y-1" style={{ color: BRAND.colors.textMuted }}>
+            <li>1. Check @mentions</li>
+            <li>2. Check assigned tasks</li>
+            <li>3. Scan activity feed</li>
+            <li>4. Work or HEARTBEAT_OK</li>
+          </ul>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-sm font-bold mb-2" style={{ color: BRAND.colors.text }}>Memory Stack</h3>
+          <ul className="text-xs space-y-1 font-mono" style={{ color: BRAND.colors.textMuted }}>
+            <li>WORKING.md → current task</li>
+            <li>YYYY-MM-DD.md → daily logs</li>
+            <li>MEMORY.md → long-term</li>
+            <li>SOUL.md → personality</li>
+          </ul>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <h3 className="text-sm font-bold mb-2" style={{ color: BRAND.colors.text }}>Task Flow</h3>
+          <p className="text-xs font-mono" style={{ color: BRAND.colors.orange }}>Inbox → Assigned → In Progress → Review → Done</p>
+          <p className="text-xs mt-2" style={{ color: BRAND.colors.textMuted }}>Full history preserved. Anyone can see the whole journey.</p>
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl" style={{ background: BRAND.gradient }}>
-        <p className="text-sm text-white"><strong>The future:</strong> Humans define what to build. Agents figure out how. Review and ship.</p>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-3 p-3 rounded-xl" style={{ background: BRAND.gradient }}>
+        <p className="text-sm text-white"><strong>Proven:</strong> @pbteja1998 shipped this with 10 agents at SiteGPT. Competitor pages, email sequences, blog posts — agents handle research, drafts, review. Humans approve.</p>
       </motion.div>
     </div>
   );
