@@ -351,38 +351,55 @@ function Slide9() {
   );
 }
 
-// SLIDE 10 - Pre-Tool Hook
+// SLIDE 10 - Permissions (settings.json)
 function Slide10() {
-  const safe = [
-    { cmd: "Read, Glob, Grep, LS", reason: "Read-only operations, no side effects" },
-    { cmd: "pnpm test, pnpm build", reason: "Safe CI commands, no production impact" },
-    { cmd: "git status, git diff", reason: "Inspection only, no mutations" },
+  const allowlist = [
+    "pnpm format/lint/test/build/dev",
+    "git status/log/diff/add/commit/push",
+    "gh pr/issue/api/run/workflow",
+    "ls, pwd, cat, head, tail, find",
+    "mcp__playwright__* (all browser ops)",
+    "mcp__linear__* (issue tracking)",
+    "WebFetch(github.com, react.dev...)",
   ];
-  const blocked = [
-    { cmd: "rm -rf /", reason: "Catastrophic deletion" },
-    { cmd: "DROP DATABASE", reason: "Data loss" },
-    { cmd: ".env + cat", reason: "Secret exposure" },
-    { cmd: "git push --force", reason: "History rewrite" },
+  const denylist = [
+    ".env, .env.* (secrets)",
+    ".ssh/** (keys)",
+    "*.key, *.pem (certificates)",
+    "credentials.json, secrets.json",
+    "node_modules, dist, build",
+    ".git, .turbo, .vscode",
+  ];
+  const hooks = [
+    { name: "SessionStart", action: "Load context + pnpm install" },
+    { name: "SessionEnd", action: "Auto-checkpoint progress" },
+    { name: "PreToolUse", action: "Security gate (Bash|Write|Edit)" },
+    { name: "PostToolUse", action: "Auto lint:fix on Write|Edit" },
   ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-3">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Shield className="w-10 h-10 text-white" /></div>
-        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Pre-Tool Hook</h2><p style={{ color: BRAND.colors.textMuted }}>Security gate before every tool invocation</p></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Permissions System</h2><p style={{ color: BRAND.colors.textMuted }}>.claude/settings.json (override with settings.local.json)</p></div>
       </motion.div>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-sm italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Allowlist safe operations → auto-approve. Blocklist dangerous patterns → reject.&rdquo;</motion.p>
-      <div className="flex-1 grid grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-green-50 border border-green-200">
-          <div className="flex items-center gap-2 mb-3"><Check className="w-5 h-5 text-green-600" /><p className="font-bold text-green-600">Auto-Approved (no prompt)</p></div>
-          <ul className="space-y-2">{safe.map((s, i) => <li key={i} className="text-sm"><span className="font-mono" style={{ color: BRAND.colors.text }}>{s.cmd}</span><br/><span className="text-xs" style={{ color: BRAND.colors.textMuted }}>{s.reason}</span></li>)}</ul>
+      <div className="flex-1 grid grid-cols-3 gap-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-4 rounded-2xl bg-green-50 border border-green-200">
+          <div className="flex items-center gap-2 mb-2"><Check className="w-4 h-4 text-green-600" /><p className="font-bold text-sm text-green-600">permissions.allow</p></div>
+          <ul className="space-y-1">{allowlist.map((s, i) => <li key={i} className="text-xs font-mono" style={{ color: BRAND.colors.text }}>{s}</li>)}</ul>
+          <p className="text-xs mt-2 italic" style={{ color: BRAND.colors.textMuted }}>Auto-approved, no prompts</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl bg-red-50 border border-red-200">
-          <div className="flex items-center gap-2 mb-3"><X className="w-5 h-5 text-red-600" /><p className="font-bold text-red-600">Blocked (always rejected)</p></div>
-          <ul className="space-y-2">{blocked.map((b, i) => <li key={i} className="text-sm"><span className="font-mono" style={{ color: BRAND.colors.text }}>{b.cmd}</span><br/><span className="text-xs" style={{ color: BRAND.colors.textMuted }}>{b.reason}</span></li>)}</ul>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-2xl bg-red-50 border border-red-200">
+          <div className="flex items-center gap-2 mb-2"><X className="w-4 h-4 text-red-600" /><p className="font-bold text-sm text-red-600">permissions.deny</p></div>
+          <ul className="space-y-1">{denylist.map((b, i) => <li key={i} className="text-xs font-mono" style={{ color: BRAND.colors.text }}>{b}</li>)}</ul>
+          <p className="text-xs mt-2 italic" style={{ color: BRAND.colors.textMuted }}>Always blocked, can&apos;t read</p>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+          <p className="font-bold text-sm mb-2" style={{ color: BRAND.colors.text }}>hooks</p>
+          <ul className="space-y-2">{hooks.map((h, i) => <li key={i} className="text-xs"><span className="font-mono font-bold" style={{ color: BRAND.colors.orange }}>{h.name}</span><br/><span style={{ color: BRAND.colors.textMuted }}>{h.action}</span></li>)}</ul>
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
-        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Why it matters:</strong> Developers don&apos;t have to approve every Read or LS command. Dangerous operations are impossible even if Claude hallucinates.</p>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-3 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Result:</strong> 80+ auto-approved commands (pnpm, git, gh, mcp). Secrets always protected. Hooks run automatically on session lifecycle.</p>
       </motion.div>
     </div>
   );
