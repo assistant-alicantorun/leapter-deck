@@ -47,18 +47,32 @@ function Slide2() {
 
 // SLIDE 3 - Architecture
 function Slide3() {
-  const folders = [{ name: "CLAUDE.md", desc: "Main entry point", icon: Brain, highlight: true }, { name: "docs/", desc: "All documentation", icon: FolderTree }, { name: ".claude/", desc: "Settings, memory, skills", icon: Layers }, { name: "apps/", desc: "Application code", icon: Terminal }];
+  const folders = [
+    { name: "CLAUDE.md", desc: "🧠 Main entry point — Claude reads this FIRST", detail: "Workflow, commands, patterns, tech stack", icon: Brain, highlight: true }, 
+    { name: "docs/", desc: "📚 All documentation consolidated", detail: "index.md, HANDBOOK, architecture, SOPs", icon: FolderTree }, 
+    { name: ".claude/", desc: "⚙️ Claude Code configuration", detail: "settings.json, memory/, skills/, hooks/, agents/", icon: Layers }, 
+    { name: "apps/", desc: "💻 Application code (monorepo)", detail: "lab, runtime, hub — each owns its Dockerfile", icon: Terminal }
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl md:text-5xl font-bold mb-12" style={{ color: BRAND.colors.text }}>Architecture</motion.h2>
-      <div className="flex-1 grid grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><FolderTree className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Architecture at a Glance</h2><p style={{ color: BRAND.colors.textMuted }}>Claude Code-optimized project structure</p></div>
+      </motion.div>
+      <div className="flex-1 grid grid-cols-2 gap-4">
         {folders.map((item, i) => { const Icon = item.icon; return (
-          <motion.div key={item.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className={`p-6 rounded-2xl border-2 flex items-start gap-4 ${item.highlight ? "border-transparent" : "border-gray-200"}`} style={item.highlight ? { background: BRAND.gradient } : {}}>
-            <div className={`p-3 rounded-xl ${item.highlight ? "bg-white/20" : "bg-gray-100"}`}><Icon className={`w-6 h-6 ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.orange } : {}} /></div>
-            <div><h3 className={`text-xl font-bold font-mono ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.text } : {}}>{item.name}</h3><p className={`text-sm ${item.highlight ? "text-white/80" : ""}`} style={!item.highlight ? { color: BRAND.colors.textMuted } : {}}>{item.desc}</p></div>
+          <motion.div key={item.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className={`p-5 rounded-2xl border-2 ${item.highlight ? "border-transparent" : "border-gray-200"}`} style={item.highlight ? { background: BRAND.gradient } : {}}>
+            <div className="flex items-start gap-3 mb-2">
+              <div className={`p-2 rounded-xl ${item.highlight ? "bg-white/20" : "bg-gray-100"}`}><Icon className={`w-5 h-5 ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.orange } : {}} /></div>
+              <div><h3 className={`text-lg font-bold font-mono ${item.highlight ? "text-white" : ""}`} style={!item.highlight ? { color: BRAND.colors.text } : {}}>{item.name}</h3><p className={`text-sm ${item.highlight ? "text-white/80" : ""}`} style={!item.highlight ? { color: BRAND.colors.textMuted } : {}}>{item.desc}</p></div>
+            </div>
+            <p className={`text-xs ml-10 font-mono ${item.highlight ? "text-white/60" : ""}`} style={!item.highlight ? { color: BRAND.colors.textMuted } : {}}>{item.detail}</p>
           </motion.div>
         ); })}
       </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Key principle:</strong> Claude reads CLAUDE.md first, then knows exactly where everything is. No more random exploration.</p>
+      </motion.div>
     </div>
   );
 }
@@ -308,21 +322,37 @@ function Slide9() {
 
 // SLIDE 10 - Pre-Tool Hook
 function Slide10() {
-  const safe = ["Read, Glob, Grep, LS", "pnpm test, pnpm build", "git status, git diff"];
-  const blocked = ["rm -rf /", "DROP DATABASE", ".env + cat", "git push --force"];
+  const safe = [
+    { cmd: "Read, Glob, Grep, LS", reason: "Read-only operations, no side effects" },
+    { cmd: "pnpm test, pnpm build", reason: "Safe CI commands, no production impact" },
+    { cmd: "git status, git diff", reason: "Inspection only, no mutations" },
+  ];
+  const blocked = [
+    { cmd: "rm -rf /", reason: "Catastrophic deletion" },
+    { cmd: "DROP DATABASE", reason: "Data loss" },
+    { cmd: ".env + cat", reason: "Secret exposure" },
+    { cmd: "git push --force", reason: "History rewrite" },
+  ];
   return (
     <div className="flex flex-col h-full" style={{ padding: "112px 96px 64px 96px" }}>
-      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>Pre-Tool Hook</motion.h2>
-      <div className="flex-1 grid grid-cols-2 gap-8">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-6 rounded-2xl bg-green-50 border border-green-200">
-          <div className="flex items-center gap-2 mb-4"><Check className="w-5 h-5 text-green-600" /><p className="font-bold text-green-600">Auto-Approved</p></div>
-          <ul className="space-y-2">{safe.map((s, i) => <li key={i} className="text-sm font-mono" style={{ color: BRAND.colors.textMuted }}>{s}</li>)}</ul>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
+        <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Shield className="w-10 h-10 text-white" /></div>
+        <div><h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Pre-Tool Hook</h2><p style={{ color: BRAND.colors.textMuted }}>Security gate before every tool invocation</p></div>
+      </motion.div>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-sm italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Allowlist safe operations → auto-approve. Blocklist dangerous patterns → reject.&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-6">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-green-50 border border-green-200">
+          <div className="flex items-center gap-2 mb-3"><Check className="w-5 h-5 text-green-600" /><p className="font-bold text-green-600">Auto-Approved (no prompt)</p></div>
+          <ul className="space-y-2">{safe.map((s, i) => <li key={i} className="text-sm"><span className="font-mono" style={{ color: BRAND.colors.text }}>{s.cmd}</span><br/><span className="text-xs" style={{ color: BRAND.colors.textMuted }}>{s.reason}</span></li>)}</ul>
         </motion.div>
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-6 rounded-2xl bg-red-50 border border-red-200">
-          <div className="flex items-center gap-2 mb-4"><X className="w-5 h-5 text-red-600" /><p className="font-bold text-red-600">Blocked</p></div>
-          <ul className="space-y-2">{blocked.map((b, i) => <li key={i} className="text-sm font-mono" style={{ color: BRAND.colors.textMuted }}>{b}</li>)}</ul>
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl bg-red-50 border border-red-200">
+          <div className="flex items-center gap-2 mb-3"><X className="w-5 h-5 text-red-600" /><p className="font-bold text-red-600">Blocked (always rejected)</p></div>
+          <ul className="space-y-2">{blocked.map((b, i) => <li key={i} className="text-sm"><span className="font-mono" style={{ color: BRAND.colors.text }}>{b.cmd}</span><br/><span className="text-xs" style={{ color: BRAND.colors.textMuted }}>{b.reason}</span></li>)}</ul>
         </motion.div>
       </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-4 p-3 rounded-xl border-l-4" style={{ borderColor: BRAND.colors.purple, background: "rgb(249 250 251)" }}>
+        <p className="text-sm" style={{ color: BRAND.colors.text }}><strong>Why it matters:</strong> Developers don&apos;t have to approve every Read or LS command. Dangerous operations are impossible even if Claude hallucinates.</p>
+      </motion.div>
     </div>
   );
 }
