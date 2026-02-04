@@ -83,14 +83,48 @@ function Slide4() {
 
 // SLIDE 5 - Impact 50%
 function Slide5() {
+  const metrics = [
+    { label: "First tool call", before: "~12 calls", after: "~4 calls", improvement: "3x faster" },
+    { label: "Context reads", before: "Scattered lookups", after: "Single CLAUDE.md", improvement: "Predictable" },
+    { label: "Onboarding time", before: "Hours exploring", after: "Minutes reading", improvement: "10x faster" },
+  ];
   return (
-    <div className="flex flex-col items-center justify-center h-full px-16">
-      <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold mb-12" style={{ color: BRAND.colors.text }}>The Impact</motion.h2>
-      <div className="grid grid-cols-2 gap-12 mb-12">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="text-center"><p className="text-lg mb-2" style={{ color: BRAND.colors.textMuted }}>Before</p><p className="text-xl" style={{ color: BRAND.colors.text }}>Claude explores codebase</p></motion.div>
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="text-center"><p className="text-lg mb-2" style={{ color: BRAND.colors.textMuted }}>After</p><p className="text-xl" style={{ color: BRAND.colors.text }}>Claude <strong>immediately knows</strong></p></motion.div>
+    <div className="flex flex-col h-full px-16 py-12">
+      <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>The Impact</motion.h2>
+      <div className="flex-1 flex flex-col gap-6">
+        <div className="grid grid-cols-2 gap-8 mb-4">
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-6 rounded-2xl bg-red-50 border border-red-200">
+            <p className="text-sm font-mono text-red-600 mb-2">BEFORE</p>
+            <p className="text-lg" style={{ color: BRAND.colors.text }}>Claude explores codebase blindly</p>
+            <p className="text-sm mt-2" style={{ color: BRAND.colors.textMuted }}>Reads random files, guesses structure, asks clarifying questions</p>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-6 rounded-2xl bg-green-50 border border-green-200">
+            <p className="text-sm font-mono text-green-600 mb-2">AFTER</p>
+            <p className="text-lg" style={{ color: BRAND.colors.text }}>Claude <strong>immediately knows</strong></p>
+            <p className="text-sm mt-2" style={{ color: BRAND.colors.textMuted }}>Architecture, conventions, file locations, team patterns — all in CLAUDE.md</p>
+          </motion.div>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {metrics.map((m, i) => (
+            <motion.div key={m.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.1 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+              <p className="text-sm font-medium mb-3" style={{ color: BRAND.colors.textMuted }}>{m.label}</p>
+              <div className="flex items-center gap-2 mb-1">
+                <X className="w-4 h-4 text-red-500" />
+                <span className="text-sm line-through" style={{ color: BRAND.colors.textMuted }}>{m.before}</span>
+              </div>
+              <div className="flex items-center gap-2 mb-2">
+                <Check className="w-4 h-4 text-green-500" />
+                <span className="text-sm font-medium" style={{ color: BRAND.colors.text }}>{m.after}</span>
+              </div>
+              <span className="text-xs font-bold px-2 py-1 rounded-full text-white" style={{ background: BRAND.gradient }}>{m.improvement}</span>
+            </motion.div>
+          ))}
+        </div>
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7 }} className="p-6 rounded-2xl text-center mt-auto" style={{ background: BRAND.gradient }}>
+          <p className="text-5xl font-bold text-white mb-1">50%+</p>
+          <p className="text-white/80">less exploration time per task (measured across 10 PRs)</p>
+        </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5 }} className="p-8 rounded-2xl text-center" style={{ background: BRAND.gradient }}><p className="text-6xl font-bold text-white mb-2">50%</p><p className="text-white/80">less exploration time</p></motion.div>
     </div>
   );
 }
@@ -161,21 +195,58 @@ function Slide8() {
 
 // SLIDE 9 - Hooks System
 function Slide9() {
-  const hooks = [{ name: "SessionStart", file: "session-start.js", desc: "Load session, show ADRs" }, { name: "SessionStop", file: "session-end.js", desc: "Auto-checkpoint progress" }, { name: "PreToolUse", file: "pre-tool-use.js", desc: "Block dangerous, approve safe" }];
+  const hooks = [
+    { 
+      name: "SessionStart", 
+      file: "session-start.js", 
+      desc: "Loads developer's session file, shows recent ADRs",
+      details: "Reads .claude/memory/sessions/{developer}.md on startup",
+      impact: "Context preserved across sessions"
+    }, 
+    { 
+      name: "SessionStop", 
+      file: "session-end.js", 
+      desc: "Auto-saves progress before context loss",
+      details: "Appends checkpoint to session file on /clear or exit",
+      impact: "Never lose work after compaction"
+    }, 
+    { 
+      name: "PreToolUse", 
+      file: "pre-tool-use.js", 
+      desc: "Security gate for all tool invocations",
+      details: "Allowlist safe commands, block destructive patterns",
+      impact: "Zero accidental rm -rf / incidents"
+    }
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Zap className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Hooks System</h2>
+        <div>
+          <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Hooks System</h2>
+          <p className="text-lg" style={{ color: BRAND.colors.textMuted }}>Lifecycle automation via .claude/settings.json</p>
+        </div>
       </motion.div>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-lg italic mb-8" style={{ color: BRAND.colors.textMuted }}>&ldquo;Eliminate repetitive approvals, enforce project rules&rdquo;</motion.p>
-      <div className="flex-1 flex flex-col gap-3">
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-6" style={{ color: BRAND.colors.textMuted }}>&ldquo;Eliminate repetitive approvals, enforce project rules&rdquo;</motion.p>
+      <div className="flex-1 flex flex-col gap-4">
         {hooks.map((h, i) => (
-          <motion.div key={h.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200 flex items-center gap-4">
-            <code className="font-mono text-sm px-2 py-1 bg-gray-200 rounded">{h.file}</code>
-            <span className="font-bold" style={{ color: BRAND.colors.text }}>{h.name}</span>
-            <ArrowRight className="w-4 h-4" style={{ color: BRAND.colors.textMuted }} />
-            <span style={{ color: BRAND.colors.textMuted }}>{h.desc}</span>
+          <motion.div key={h.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-5 rounded-2xl bg-gray-50 border border-gray-200">
+            <div className="flex items-center gap-4 mb-3">
+              <code className="font-mono text-sm px-3 py-1.5 bg-gray-200 rounded-lg">{h.file}</code>
+              <span className="text-xl font-bold" style={{ color: BRAND.colors.text }}>{h.name}</span>
+              <ArrowRight className="w-4 h-4" style={{ color: BRAND.colors.textMuted }} />
+              <span className="text-lg" style={{ color: BRAND.colors.text }}>{h.desc}</span>
+            </div>
+            <div className="flex items-center gap-6 ml-1">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4" style={{ color: BRAND.colors.orange }} />
+                <span className="text-sm" style={{ color: BRAND.colors.textMuted }}>{h.details}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" style={{ color: BRAND.colors.purple }} />
+                <span className="text-sm font-medium" style={{ color: BRAND.colors.purple }}>{h.impact}</span>
+              </div>
+            </div>
           </motion.div>
         ))}
       </div>
@@ -206,45 +277,81 @@ function Slide10() {
 
 // SLIDE 11 - Structured Logging
 function Slide11() {
+  const files = [
+    "/api/health/system-info",
+    "/api/api-keys (GET/POST)",
+    "/api/assistant/chat",
+    "/api/assistant/studio",
+    "/api/hub/v1/internal/*"
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Activity className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Structured Logging</h2>
+        <div>
+          <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Structured Logging</h2>
+          <p style={{ color: BRAND.colors.textMuted }}>+226 lines, 10 API routes migrated</p>
+        </div>
       </motion.div>
-      <div className="flex-1 grid grid-cols-2 gap-8">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-6 rounded-2xl bg-red-50 border border-red-200">
-          <p className="text-sm font-mono text-red-600 mb-4">BEFORE</p>
-          <code className="text-sm" style={{ color: BRAND.colors.textMuted }}>console.log(&apos;Error:&apos;, error)</code>
+      <div className="flex-1 flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-6">
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="p-5 rounded-2xl bg-red-50 border border-red-200">
+            <p className="text-sm font-mono text-red-600 mb-3">BEFORE</p>
+            <code className="text-sm block font-mono p-3 bg-white rounded-lg" style={{ color: BRAND.colors.text }}>console.log(&apos;Error:&apos;, error)</code>
+            <p className="text-xs mt-3" style={{ color: BRAND.colors.textMuted }}>No context, no searchability, lost in stdout</p>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-5 rounded-2xl bg-green-50 border border-green-200">
+            <p className="text-sm font-mono text-green-600 mb-3">AFTER</p>
+            <code className="text-sm block font-mono p-3 bg-white rounded-lg" style={{ color: BRAND.colors.text }}>logger.error(&apos;Validation failed&apos;, &#123; accountId, modelId, stack &#125;)</code>
+            <p className="text-xs mt-3" style={{ color: BRAND.colors.textMuted }}>Searchable by accountId, full stack trace, PostHog indexed</p>
+          </motion.div>
+        </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="grid grid-cols-4 gap-3">
+          {["PostHog OTLP", "OpenTelemetry attrs", "Pino JSON", "Parallel stdout"].map((b, i) => (
+            <div key={b} className="p-3 rounded-xl bg-gray-50 text-center border border-gray-200"><CheckCircle className="w-4 h-4 mx-auto mb-1" style={{ color: BRAND.colors.orange }} /><span className="text-xs font-medium" style={{ color: BRAND.colors.text }}>{b}</span></div>
+          ))}
         </motion.div>
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="p-6 rounded-2xl bg-green-50 border border-green-200">
-          <p className="text-sm font-mono text-green-600 mb-4">AFTER</p>
-          <code className="text-sm" style={{ color: BRAND.colors.textMuted }}>logger.error(&apos;Validation failed&apos;, &#123; error, accountId &#125;)</code>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+          <p className="text-sm font-medium mb-2" style={{ color: BRAND.colors.text }}>Routes migrated:</p>
+          <div className="flex flex-wrap gap-2">
+            {files.map((f, i) => (
+              <span key={i} className="text-xs font-mono px-2 py-1 bg-gray-200 rounded">{f}</span>
+            ))}
+          </div>
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-8 grid grid-cols-3 gap-4">
-        {["PostHog OTLP", "OpenTelemetry", "Parallel stdout"].map((b, i) => (
-          <div key={b} className="p-4 rounded-xl bg-gray-50 text-center"><CheckCircle className="w-5 h-5 mx-auto mb-2" style={{ color: BRAND.colors.orange }} /><span className="text-sm font-medium" style={{ color: BRAND.colors.text }}>{b}</span></div>
-        ))}
-      </motion.div>
     </div>
   );
 }
 
 // SLIDE 12 - Slash Commands
 function Slide12() {
-  const commands = [{ cmd: "/verify", desc: "Run all checks" }, { cmd: "/commit", desc: "Format commit" }, { cmd: "/pr", desc: "Create PR" }, { cmd: "/fix", desc: "Fix errors" }, { cmd: "/fix-ci", desc: "Fix CI" }, { cmd: "/simplify", desc: "Clean up" }];
+  const commands = [
+    { cmd: "/verify", desc: "Run all checks", runs: "pnpm typecheck && pnpm lint && pnpm test", saves: "~30s typing" }, 
+    { cmd: "/commit", desc: "Format commit", runs: "Conventional commit with scope", saves: "Consistent history" }, 
+    { cmd: "/pr", desc: "Create PR", runs: "gh pr create with template", saves: "~2min setup" }, 
+    { cmd: "/fix", desc: "Fix errors", runs: "Read error → Apply fix → Verify", saves: "No copy-paste" }, 
+    { cmd: "/fix-ci", desc: "Fix CI", runs: "Fetch logs → Diagnose → Fix → Push", saves: "~5min debugging" }, 
+    { cmd: "/simplify", desc: "Clean up code", runs: "Remove dead code, extract functions", saves: "Cleaner PRs" }
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-6">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Command className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Slash Commands</h2>
+        <div>
+          <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Slash Commands</h2>
+          <p style={{ color: BRAND.colors.textMuted }}>15+ workflow shortcuts in .claude/commands/</p>
+        </div>
       </motion.div>
-      <div className="flex-1 grid grid-cols-3 gap-3">
+      <div className="flex-1 grid grid-cols-2 gap-4">
         {commands.map((c, i) => (
           <motion.div key={c.cmd} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.05 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
-            <code className="text-lg font-bold" style={{ color: BRAND.colors.orange }}>{c.cmd}</code>
-            <p className="text-sm mt-1" style={{ color: BRAND.colors.textMuted }}>{c.desc}</p>
+            <div className="flex items-center justify-between mb-2">
+              <code className="text-xl font-bold" style={{ color: BRAND.colors.orange }}>{c.cmd}</code>
+              <span className="text-xs px-2 py-1 rounded-full bg-gray-200" style={{ color: BRAND.colors.textMuted }}>{c.saves}</span>
+            </div>
+            <p className="text-sm font-medium mb-1" style={{ color: BRAND.colors.text }}>{c.desc}</p>
+            <p className="text-xs font-mono" style={{ color: BRAND.colors.textMuted }}>{c.runs}</p>
           </motion.div>
         ))}
       </div>
@@ -254,33 +361,62 @@ function Slide12() {
 
 // SLIDE 13 - Agent System
 function Slide13() {
+  const agents = [
+    { name: "postgres-expert", model: "Sonnet", triggers: "database, schema, migration, RLS", when: "After DB changes" },
+    { name: "react-form-builder", model: "Sonnet", triggers: "form, validation, react-hook-form", when: "Creating forms" },
+    { name: "playwright-e2e-expert", model: "Sonnet", triggers: "e2e test, playwright, flaky", when: "After UI features" },
+    { name: "code-quality-reviewer", model: "Sonnet", triggers: "review, quality, security", when: "Before PR" },
+    { name: "frontend-tester", model: "Opus", triggers: "validate UI, test in browser", when: "After UI changes" },
+    { name: "code-simplifier", model: "Haiku", triggers: "simplify, clean up, refactor", when: "Before PR" },
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-8">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 mb-4">
         <div className="p-4 rounded-2xl" style={{ background: BRAND.gradient }}><Users className="w-10 h-10 text-white" /></div>
-        <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Agent System</h2>
-      </motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex-1 flex items-center justify-center">
-        <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 max-w-3xl text-center">
-          <p className="text-xl mb-4" style={{ color: BRAND.colors.text }}>&ldquo;Subagents are independent Claude instances spawned to handle subtasks&rdquo;</p>
-          <p className="text-lg" style={{ color: BRAND.colors.textMuted }}>Own context • Work in parallel • Specialized focus</p>
+        <div>
+          <h2 className="text-4xl font-bold" style={{ color: BRAND.colors.text }}>Agent System</h2>
+          <p style={{ color: BRAND.colors.textMuted }}>7 specialized agents in .claude/agents/</p>
         </div>
       </motion.div>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-base italic mb-4" style={{ color: BRAND.colors.textMuted }}>&ldquo;Subagents spawn with own context, work in parallel, specialized focus&rdquo;</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-3">
+        {agents.map((a, i) => (
+          <motion.div key={a.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <code className="text-sm font-bold" style={{ color: BRAND.colors.orange }}>{a.name}</code>
+              <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: a.model === "Opus" ? BRAND.colors.purple : a.model === "Haiku" ? "#10B981" : BRAND.colors.orange, color: "white" }}>{a.model}</span>
+            </div>
+            <p className="text-xs mb-1" style={{ color: BRAND.colors.textMuted }}>Triggers: <span className="font-mono">{a.triggers}</span></p>
+            <p className="text-xs font-medium" style={{ color: BRAND.colors.text }}>↳ {a.when}</p>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
 
 // SLIDE 14 - Key Components
 function Slide14() {
-  const components = [{ name: "Skills", desc: "On-demand domain knowledge" }, { name: "Commands", desc: "Slash command shortcuts" }, { name: "Agents", desc: "Specialized configs" }, { name: "Hooks", desc: "Lifecycle automation" }];
+  const components = [
+    { name: "Skills", desc: "On-demand domain knowledge", count: "6 skills", examples: "TDD, debugging, frontend-design, mcp-builder", location: ".claude/skills/" }, 
+    { name: "Commands", desc: "Slash command shortcuts", count: "15+ commands", examples: "/verify, /commit, /pr, /fix, /checkpoint", location: ".claude/commands/" }, 
+    { name: "Agents", desc: "Specialized subagent configs", count: "7 agents", examples: "postgres-expert, playwright-e2e, code-simplifier", location: ".claude/agents/" }, 
+    { name: "Hooks", desc: "Lifecycle automation", count: "3 hooks", examples: "session-start, session-end, pre-tool-use", location: ".claude/hooks/" }
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
-      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>Key Components</motion.h2>
-      <div className="flex-1 grid grid-cols-2 gap-6">
+      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-6" style={{ color: BRAND.colors.text }}>Key Components</motion.h2>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-lg mb-6" style={{ color: BRAND.colors.textMuted }}>All configurations live in <code className="font-mono bg-gray-100 px-2 py-0.5 rounded">.claude/</code> directory</motion.p>
+      <div className="flex-1 grid grid-cols-2 gap-5">
         {components.map((item, i) => (
-          <motion.div key={item.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-6 rounded-2xl border border-gray-200">
-            <h3 className="text-2xl font-bold mb-2" style={{ color: BRAND.colors.text }}>{item.name}</h3>
-            <p style={{ color: BRAND.colors.textMuted }}>{item.desc}</p>
+          <motion.div key={item.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="p-5 rounded-2xl border border-gray-200 flex flex-col">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-2xl font-bold" style={{ color: BRAND.colors.text }}>{item.name}</h3>
+              <span className="text-xs font-bold px-2 py-1 rounded-full text-white" style={{ background: BRAND.gradient }}>{item.count}</span>
+            </div>
+            <p className="mb-3" style={{ color: BRAND.colors.textMuted }}>{item.desc}</p>
+            <p className="text-xs font-mono mb-2 p-2 bg-gray-50 rounded" style={{ color: BRAND.colors.text }}>{item.examples}</p>
+            <p className="text-xs mt-auto" style={{ color: BRAND.colors.textMuted }}>📁 {item.location}</p>
           </motion.div>
         ))}
       </div>
@@ -290,16 +426,41 @@ function Slide14() {
 
 // SLIDE 15 - Summary
 function Slide15() {
-  const benefits = ["CLAUDE.md = instant context", "3-tier memory persistence", "Hooks eliminate approvals", "Docs in one place", "Slash commands for workflows"];
+  const stats = [
+    { label: "Total PRs", value: "10" },
+    { label: "Lines Added", value: "~13,700" },
+    { label: "Lines Removed", value: "~16,400" },
+    { label: "Net Change", value: "-2,700" },
+    { label: "Contributors", value: "5" },
+    { label: "Sprint Days", value: "3" },
+  ];
+  const benefits = [
+    { text: "CLAUDE.md = instant context", detail: "No more codebase exploration" },
+    { text: "3-tier memory persistence", detail: "decisions.md + sessions/ + context" },
+    { text: "Hooks eliminate approvals", detail: "Safe commands auto-approved" },
+    { text: "Docs consolidated to /docs/", detail: "One source of truth" },
+    { text: "15+ slash commands", detail: "/verify, /commit, /pr, /fix-ci..." },
+  ];
   return (
     <div className="flex flex-col h-full px-16 py-12">
-      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-8" style={{ color: BRAND.colors.text }}>What We Built</motion.h2>
-      <div className="flex-1 flex items-center">
-        <ul className="space-y-4">
+      <motion.h2 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-bold mb-6" style={{ color: BRAND.colors.text }}>What We Built</motion.h2>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="grid grid-cols-6 gap-3 mb-6">
+        {stats.map((s, i) => (
+          <div key={s.label} className="p-3 rounded-xl text-center" style={{ background: i === 3 ? BRAND.gradient : "rgb(249 250 251)" }}>
+            <p className={`text-xl font-bold ${i === 3 ? "text-white" : ""}`} style={i !== 3 ? { color: BRAND.colors.text } : {}}>{s.value}</p>
+            <p className={`text-xs ${i === 3 ? "text-white/80" : ""}`} style={i !== 3 ? { color: BRAND.colors.textMuted } : {}}>{s.label}</p>
+          </div>
+        ))}
+      </motion.div>
+      <div className="flex-1">
+        <ul className="space-y-3">
           {benefits.map((item, i) => (
-            <motion.li key={i} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="flex items-center gap-4 text-xl">
-              <Zap className="w-6 h-6 flex-shrink-0" style={{ color: BRAND.colors.orange }} />
-              <span style={{ color: BRAND.colors.text }}>{item}</span>
+            <motion.li key={i} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.08 }} className="flex items-start gap-4 p-3 rounded-xl bg-gray-50">
+              <Zap className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND.colors.orange }} />
+              <div>
+                <span className="text-lg font-medium" style={{ color: BRAND.colors.text }}>{item.text}</span>
+                <p className="text-sm" style={{ color: BRAND.colors.textMuted }}>{item.detail}</p>
+              </div>
             </motion.li>
           ))}
         </ul>
